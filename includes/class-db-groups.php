@@ -24,13 +24,58 @@ class CGC_Groups extends CGC_Groups_DB {
 	*/
 	public function get_columns() {
 		return array(
-			'group_id'     => '%d',
-			'owner_id'     => '%d',
-			'name'         => '%s',
-			'description'  => '%s',
-			'member_count' => '%d',
-			'date_created' => '%s',
+			'group_id'      => '%d',
+			'owner_id'      => '%d',
+			'name'          => '%s',
+			'description'   => '%s',
+			'member_count'  => '%d',
+			'fixed_billing' => '%d',
+			'date_created'  => '%s',
 		);
+	}
+
+	/**
+	 * Get the group name
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  string
+	 */
+	public function get_name( $group_id = 0 ) {
+		return $this->get_column( 'name', $group_id );
+	}
+
+	/**
+	 * Get the group description
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  string
+	 */
+	public function get_description( $group_id = 0 ) {
+		return $this->get_column( 'description', $group_id );
+	}
+
+	/**
+	 * Get the group member_count
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int
+	 */
+	public function get_member_count( $group_id = 0 ) {
+		return $this->get_column( 'member_count', $group_id );
+	}
+
+	/**
+	 * Get the group owner_id
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int
+	 */
+	public function get_owner_id( $group_id = 0 ) {
+		return $this->get_column( 'owner_id', $group_id );
 	}
 
 	/**
