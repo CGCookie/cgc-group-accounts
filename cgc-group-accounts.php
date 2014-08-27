@@ -142,3 +142,17 @@ function cgc_group_accounts() {
 	return CGC_Group_Accounts::instance();
 }
 cgc_group_accounts();
+
+
+/**
+ * Create database tables during install
+ *
+ * @since 1.0
+ */
+function cgc_group_accounts_install() {
+
+	cgc_group_accounts()->groups->create_table();
+	cgc_group_accounts()->members->create_table();
+
+}
+register_activation_hook( __FILE__, 'cgc_group_accounts_install' );
