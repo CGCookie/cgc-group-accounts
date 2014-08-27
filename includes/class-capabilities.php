@@ -11,7 +11,7 @@ class CGC_Group_Capabilities {
 	}
 
 	public function get_tasks() {
-		return array( 'manage_billing', 'manage_members', 'view_group' ):
+		return array( 'manage_billing', 'manage_members', 'view_group' );
 	}
 
 	public function get_tasks_of_role( $role = '' ) {

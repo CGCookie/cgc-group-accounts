@@ -96,7 +96,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'date_created'  => current_time( 'mysql' ),
 		);
 
-		$args = wp_parse_args( $data, $defaults );
+		$args = wp_parse_args( $args, $defaults );
 
 		if(  empty( $args['owner_id'] ) ) {
 			return false;

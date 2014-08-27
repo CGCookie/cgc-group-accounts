@@ -90,7 +90,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 			'date_added' => current_time( 'mysql' ),
 		);
 
-		$args = wp_parse_args( $data, $defaults );
+		$args = wp_parse_args( $args, $defaults );
 
 		if(  empty( $args['user_id'] ) || empty( $args['group_id'] ) ) {
 			return false;

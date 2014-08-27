@@ -128,7 +128,6 @@ final class CGC_Group_Accounts {
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-base.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-groups.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-group-members.php';
-		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-CGC_Group_Capabilities.php';
 
 	}
 
