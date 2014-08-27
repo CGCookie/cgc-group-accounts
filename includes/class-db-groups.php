@@ -79,6 +79,43 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Adds a new group
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int|false
+	 */
+	public function add( $args = array() ) {
+
+		$defaults = array(
+			'owner_id'      => 0,
+			'description'   => '',
+			'name'          => '',
+			'member_count'  => 0,
+			'fixed_billing' => 0,
+			'date_created'  => current_time( 'mysql' ),
+		);
+
+		$args = wp_parse_args( $data, $defaults );
+
+		if(  empty( $args['owner_id'] ) ) {
+			return false;
+		}
+
+		$add = $this->insert( $args, 'group' );
+
+		if( $add ) {
+
+			do_action( 'cgc_add_group', $add );
+
+			return $add;
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Create the table
 	 *
 	 * @access  public
