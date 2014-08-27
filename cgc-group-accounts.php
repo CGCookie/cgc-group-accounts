@@ -61,7 +61,6 @@ final class CGC_Group_Accounts {
 	 * @static var array $instance
 	 * @uses CGC_Group_Accounts::includes() Include the required files
 	 * @uses CGC_Group_Accounts::setup_actions() Setup the hooks and actions
-	 * @uses CGC_Group_Accounts::updater() Setup the plugin updater
 	 * @return CGC_Group_Accounts
 	 */
 	public static function instance() {
