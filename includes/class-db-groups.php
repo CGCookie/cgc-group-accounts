@@ -79,6 +79,31 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Get the members of the group
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  array
+	 */
+	public function get_members( $group_id = 0 ) {
+		
+		global $wpdb;
+
+		if( empty( $group_id ) ) {
+			return array();
+		}
+
+		$members = wp_cache_get( 'cgc_group_' . $group_id . '_members', 'groups' );
+
+		if( false === $members ) {
+			$members = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM group_members WHERE `group_id` = '%d';", $group_id ) );
+			wp_cache_set( 'cgc_group_' . $group_id . '_members', $members, 'groups', 3600 );
+		}
+
+		return $members;
+	}
+
+	/**
 	 * Adds a new group
 	 *
 	 * @access  public
