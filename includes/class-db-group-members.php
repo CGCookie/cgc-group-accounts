@@ -44,6 +44,37 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Get the member role
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  string
+	 */
+	public function get_role( $user_id = 0 ) {
+		$role = $this->get_column( 'role', $user_id );
+		if( empty( $role ) ) {
+			$role = 'member';
+		}
+		return $role;
+	}
+
+	/**
+	 * Get the group name for this member
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  string
+	 */
+	public function get_group_name( $user_id = 0 ) {
+		$group_id = $this->get_column( 'group_id', $user_id );
+		if( empty( $group_id ) ) {
+			return false;
+		}
+
+		return cgc_group_accounts()->groups->get_name( $group_id );
+	}
+
+	/**
 	 * Create the table
 	 *
 	 * @access  public
