@@ -79,6 +79,44 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Retrieve groups from the database
+	 *
+	 * @access  public
+	 * @since   1.0
+	*/
+	public function get_groups( $args = array() ) {
+		global $wpdb;
+
+		$defaults = array(
+			'number'  => 20,
+			'offset'  => 0,
+			'status'  => '',
+			'order'   => 'DESC',
+			'orderby' => 'group_id'
+		);
+
+		$args  = wp_parse_args( $args, $defaults );
+
+		if( $args['number'] < 1 ) {
+			$args['number'] = 999999999999;
+		}
+
+		$where = '';
+
+		$cache_key = md5( 'cgc_groups' . serialize( $args ) );
+
+		$groups = wp_cache_get( $cache_key, 'groups' );
+
+		if( false === $groups ) {
+			$groups = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d,%d;", absint( $args['offset'] ), absint( $args['number'] ) ) );
+			wp_cache_set( $cache_key, $groups, 'groups', 3600 );
+		}
+
+		return $groups;
+
+	}
+
+	/**
 	 * Get the members of the group
 	 *
 	 * @access  public
@@ -195,7 +233,8 @@ class CGC_Groups extends CGC_Groups_DB {
 			`member_count` bigint(20) NOT NULL,
 			`fixed_billing` char(1) NOT NULL,
 			`date_created` datetime NOT NULL,
-			PRIMARY KEY (group_id)
+			PRIMARY KEY (group_id),
+			UNIQUE KEY (owner_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
 
 		dbDelta( $sql );
