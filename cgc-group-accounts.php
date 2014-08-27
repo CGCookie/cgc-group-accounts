@@ -139,7 +139,7 @@ endif; // End if class_exists check
  * @since 1.0
  * @return object The one true CGC_Group_Accounts Instance
  */
-function cgc_group_Accounts() {
+function cgc_group_accounts() {
 	return CGC_Group_Accounts::instance();
 }
-cgc_group_Accounts();
+cgc_group_accounts();
