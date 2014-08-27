@@ -52,6 +52,14 @@ final class CGC_Group_Accounts {
 	public $members;
 
 	/**
+	 * The capabilities instance variable.
+	 *
+	 * @var CGC_Group_Capabilities
+	 * @since 1.0
+	 */
+	public $capabilities;
+
+	/**
 	 * Main CGC_Group_Accounts Instance
 	 *
 	 * Insures that only one instance of CGC_Group_Accounts exists in memory at any one
@@ -70,8 +78,9 @@ final class CGC_Group_Accounts {
 			self::$instance->includes();
 
 			// Setup objects
-			self::$instance->groups  = new CGC_Groups;
-			self::$instance->members = new CGC_Group_Members;
+			self::$instance->groups       = new CGC_Groups;
+			self::$instance->members      = new CGC_Group_Members;
+			self::$instance->capabilities = new CGC_Group_Capabilities;
 
 		}
 		return self::$instance;
@@ -115,9 +124,11 @@ final class CGC_Group_Accounts {
 	 */
 	private function includes() {
 
+		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-capabilities.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-base.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-groups.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-group-members.php';
+		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-CGC_Group_Capabilities.php';
 
 	}
 
