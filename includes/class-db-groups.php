@@ -46,8 +46,9 @@ class CGC_Groups extends CGC_Groups_DB {
 			`group_id` bigint(20) NOT NULL AUTO_INCREMENT,
 			`owner_id` bigint(20) NOT NULL,
 			`name` mediumtext NOT NULL,
-			`description` largetext NOT NULL,
+			`description` longtext NOT NULL,
 			`member_count` bigint(20) NOT NULL,
+			`fixed_billing` char(1) NOT NULL,
 			`date_created` datetime NOT NULL,
 			PRIMARY KEY (group_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
