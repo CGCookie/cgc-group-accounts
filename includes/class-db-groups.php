@@ -64,7 +64,7 @@ class CGC_Groups extends CGC_Groups_DB {
 	 * @return  int
 	 */
 	public function get_member_count( $group_id = 0 ) {
-		return $this->get_column( 'member_count', $group_id );
+		return absint( $this->get_column( 'member_count', $group_id ) );
 	}
 
 	/**
@@ -112,6 +112,44 @@ class CGC_Groups extends CGC_Groups_DB {
 		}
 
 		return false;
+
+	}
+
+	/**
+	 * Increment the group's member count
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int New count
+	 */
+	public function increment_count( $group_id = 0 ) {
+
+		if( empty( $group_id ) ) {
+			return 0;
+		}
+
+		$count = $this->get_member_count( $group_id );
+		$count += 1;
+		$this->update( $group_id, array( 'member_count' => $count ) );
+
+	}
+
+	/**
+	 * Decrement the group's member count
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int New count
+	 */
+	public function decrement_count( $group_id = 0 ) {
+
+		if( empty( $group_id ) ) {
+			return 0;
+		}
+
+		$count = $this->get_member_count( $group_id );
+		$count -= 1;
+		$this->update( $group_id, array( 'member_count' => $count ) );
 
 	}
 

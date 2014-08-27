@@ -75,6 +75,18 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Get the group ID this memer belongs to
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int
+	 */
+	public function get_group_id( $user_id = 0 ) {
+
+		return $this->get_column( 'group_id', $user_id );
+	}
+
+	/**
 	 * Adds a new member to a group
 	 *
 	 * @access  public
@@ -102,10 +114,35 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 			do_action( 'cgc_add_group_member', $add );
 
+			cgc_group_accounts()->groups->increment_count( $args['group_id'] );
+
 			return $add;
 		}
 
 		return false;
+
+	}
+
+	/**
+	 * Removes a user from any group they belong to
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int|false
+	 */
+	public function remove( $user_id = 0 ) {
+
+		if(  empty( $user_id ) ) {
+			return false;
+		}
+
+		$group_id = $this->get_group_id( $user_id );
+
+		$this->delete( $user_id );
+
+		do_action( 'cgc_remove_group_member', $user_id );
+
+		cgc_group_accounts()->groups->decrement_count( $group_id );
 
 	}
 
