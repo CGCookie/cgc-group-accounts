@@ -21,6 +21,13 @@ class CGC_Groups_Admin_Menu {
 
 				break;
 
+
+			case 'add-group' :
+
+				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/add-group.php';
+		
+				break;
+
 			case 'view-members' :
 
 				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/members.php';

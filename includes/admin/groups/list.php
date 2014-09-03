@@ -1,6 +1,6 @@
 <div class="wrap" id="rcp-members-page">
 
-	<h2>Groups</h2>
+	<h2>Group <a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&view=add-group' ) ); ?>" class="add-new-h2">Add Group</a></h2>
 	<table class="wp-list-table widefat fixed posts">
 		<thead>
 			<tr>

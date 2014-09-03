@@ -7,11 +7,47 @@ class CGC_Groups_Admin_Actions {
 
 	public function __construct() {
 
+		add_action( 'admin_init', array( $this, 'add_group' ) );
 		add_action( 'admin_init', array( $this, 'add_member_to_group' ) );
 		add_action( 'admin_init', array( $this, 'remove_member_from_group' ) );
 		add_action( 'admin_init', array( $this, 'make_member_admin' ) );
 		add_action( 'admin_init', array( $this, 'make_admin_member' ) );
 		add_action( 'wp_ajax_cgc_search_users', array( $this, 'search_users' ) );
+
+	}
+
+	public function add_group() {
+
+		if( empty( $_REQUEST['cgcg-action'] ) ) {
+			return;
+		}
+
+		if( 'add-group' != $_REQUEST['cgcg-action'] ) {
+			return;
+		}
+
+		if( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if( empty( $_REQUEST['user_id'] ) ) {
+			return;
+		}
+
+		if( empty( $_REQUEST['name'] ) ) {
+			return;
+		}
+
+		$user_id     = absint( $_REQUEST['user_id'] );
+		$name        = sanitize_text_field( $_REQUEST['name'] );
+		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
+
+		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description ) );
+
+		cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id, 'role' => 'owner' ) );
+
+		wp_redirect( admin_url( 'admin.php?page=cgc-groups&message=group-added' ) );
+		exit;
 
 	}
 
