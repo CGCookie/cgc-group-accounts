@@ -35,6 +35,28 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Determines if the group is active.
+	 *
+	 * A group is active if the group owner has an active subscription
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  bool
+	 */
+	public function is_group_active( $group_id = 0 ) {
+
+		$ret = false;
+
+		if( function_exists( 'rcp_is_active' ) ) {
+
+			$ret = rcp_is_active( $this->get_owner_id( $group_id ) );
+
+		}
+
+		return $ret;
+	}
+
+	/**
 	 * Get the group name
 	 *
 	 * @access  public

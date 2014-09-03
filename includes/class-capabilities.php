@@ -4,6 +4,8 @@ class CGC_Group_Capabilities {
 	
 	public function __construct() {
 
+		add_filter( 'rcp_is_active', array( $this, 'rcp_is_active' ), 10, 2 );
+
 	}
 
 	public function get_roles() {
@@ -62,6 +64,23 @@ class CGC_Group_Capabilities {
 		$tasks = $this->get_tasks_of_role( $role );
 
 		return in_array( $task, $tasks );
+
+	}
+
+	public function rcp_is_active( $ret, $user_id ) {
+		if( ! $ret ) {
+
+			$group_id = cgc_group_accounts()->members->get_group_id( $user_id );
+
+			if( ! empty( $group_id ) ) {
+
+				$ret = cgc_group_accounts()->groups->is_group_active( $group_id );
+
+			}
+
+		}
+
+		return $ret;
 
 	}
 
