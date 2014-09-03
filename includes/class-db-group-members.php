@@ -104,22 +104,17 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		if(  empty( $args['user_id'] ) || empty( $args['group_id'] ) ) {
+		if( empty( $args['user_id'] ) || empty( $args['group_id'] ) ) {
 			return false;
 		}
 
-		$add = $this->insert( $args, 'member' );
+		$this->insert( $args, 'member' );
 
-		if( $add ) {
+		do_action( 'cgc_add_group_member', $add );
 
-			do_action( 'cgc_add_group_member', $add );
+		cgc_group_accounts()->groups->increment_count( $args['group_id'] );
 
-			cgc_group_accounts()->groups->increment_count( $args['group_id'] );
-
-			return $add;
-		}
-
-		return false;
+		return true;
 
 	}
 
