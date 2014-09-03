@@ -44,13 +44,13 @@
 					<td><?php echo $member->group_id; ?></td>
 					<td><?php echo $member->role; ?></td>
 					<td>
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Remove from Group</a>&nbsp;|&nbsp;
-						<?php if( 'owner' == $member->role ) : ?>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=make-admin&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Admin</a>
-						<?php elseif( 'admin' == $member->role ) : ?>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=make-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Member</a>
-						<?php else : ?>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=make-admin&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Admin</a>
+						<?php if( 'owner' != $member->role ) : ?>
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Remove from Group</a>&nbsp;|&nbsp;
+							<?php if( 'admin' == $member->role ) : ?>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=make-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Member</a>
+							<?php else : ?>
+								<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=make-admin&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Admin</a>
+							<?php endif; ?>
 						<?php endif; ?>
 					</td>
 				</tr>

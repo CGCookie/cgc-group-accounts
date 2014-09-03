@@ -18,6 +18,8 @@ class CGC_Groups_Admin_Menu {
 		switch( $view ) {
 
 			case 'edit' :
+				
+				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/edit-group.php';
 
 				break;
 
