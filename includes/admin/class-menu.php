@@ -13,17 +13,31 @@ class CGC_Groups_Admin_Menu {
 
 	public function groups_admin() {
 
-		if( isset( $_GET['edit-group'] ) ) {
+		$view = isset( $_GET['view'] ) ? $_GET['view'] : '';
 
-		} elseif( isset( $_GET['add-member'] ) ) {
+		switch( $view ) {
+
+			case 'edit' :
+
+				break;
+
+			case 'view-members' :
+
+				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/members.php';
 		
-		} elseif( isset( $_GET['group'] ) ) {
+				break;
 
-			include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/members.php';
+			case 'add-member' :
 
-		} else {
+				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/add-member.php';
+		
+				break;
 
-			include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/list.php';
+			default:
+
+				include CGC_GROUPS_PLUGIN_DIR . 'includes/admin/groups/list.php';
+	
+				break;
 
 		}
 
