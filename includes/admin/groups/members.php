@@ -38,7 +38,7 @@
 				}
 				?>
 
-				<tr>
+				<tr<?php echo $i & 1 ? ' class="alternate"' : ''; ?>>
 					<td><?php echo $user_data->display_name; ?></td>
 					<td><?php echo $member->user_id; ?></td>
 					<td><?php echo $member->group_id; ?></td>

@@ -34,7 +34,7 @@
 		if( ! empty( $groups ) ) :
 			$i = 1;
 			foreach( $groups as $key => $group ) : ?>
-				<tr>
+				<tr<?php echo $i & 1 ? ' class="alternate"' : ''; ?>>
 					<td><?php echo $group->name; ?></td>
 					<td><?php echo $group->group_id; ?></td>
 					<td><?php echo $group->owner_id; ?></td>
