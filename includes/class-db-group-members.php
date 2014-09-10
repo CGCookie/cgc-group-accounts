@@ -65,6 +65,11 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	 * @return  string
 	 */
 	public function get_role( $user_id = 0 ) {
+
+		if( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
 		$role = $this->get_column( 'role', $user_id );
 		if( empty( $role ) ) {
 			$role = 'member';
@@ -80,6 +85,11 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	 * @return  string
 	 */
 	public function get_group_name( $user_id = 0 ) {
+
+		if( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+
 		$group_id = $this->get_column( 'group_id', $user_id );
 		if( empty( $group_id ) ) {
 			return false;
@@ -96,6 +106,10 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	 * @return  int
 	 */
 	public function get_group_id( $user_id = 0 ) {
+
+		if( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
 
 		return $this->get_column( 'group_id', $user_id );
 	}

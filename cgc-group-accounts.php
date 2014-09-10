@@ -128,11 +128,15 @@ final class CGC_Group_Accounts {
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-base.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-groups.php';
 		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-db-group-members.php';
+		require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-actions.php';
 
 		if( is_admin() ) {
 
-			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/admin/actions.php';
 			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/admin/class-menu.php';
+
+		} else {
+
+			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-shortcodes.php';
 
 		}
 
