@@ -44,6 +44,20 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Determine if the user is a member of a group
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  bool
+	 */
+	public function is_group_member( $user_id = 0 ) {
+		if( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
+		}
+		return (bool) $this->get_group_id( $user_id );
+	}
+
+	/**
 	 * Get the member role
 	 *
 	 * @access  public
