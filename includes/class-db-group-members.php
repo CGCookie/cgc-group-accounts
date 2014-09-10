@@ -108,7 +108,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 			return false;
 		}
 
-		$this->insert( $args, 'member' );
+		$add = $this->insert( $args, 'member' );
 
 		do_action( 'cgc_add_group_member', $add );
 
