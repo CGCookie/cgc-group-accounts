@@ -51,10 +51,14 @@ class CGC_Group_Capabilities {
 
 	}
 
-	public function can( $task = '', $user_id = 0 ) {
+	public function can( $task = '', $user_id = 0, $group_id = 0 ) {
 
 		if( empty( $task ) || empty( $user_id ) ) {
 			return false;
+		}
+
+		if( current_user_can( 'manage_users' ) ) {
+			return true;
 		}
 
 		// Get the member's role in the group
@@ -63,7 +67,14 @@ class CGC_Group_Capabilities {
 		// Get the tasks their role has
 		$tasks = $this->get_tasks_of_role( $role );
 
-		return in_array( $task, $tasks );
+		// Check that this user is in the specified group
+		if( ! empty( $group_id ) ) {
+			$in_group = (int) cgc_group_accounts()->members->get_group_id( $user_id ) === (int) $group_id;
+		} else {
+			$in_group = true;
+		}
+
+		return in_array( $task, $tasks ) && $in_group;
 
 	}
 
