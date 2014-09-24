@@ -121,7 +121,14 @@ class CGC_Groups_Actions {
 
 		cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $_SERVER['HTTP_REFERER'] ) );
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $redirect );
+		} else {
+			$redirect = home_url( '/settings/?message=group-member-added#subscription' );
+		}
+
+		wp_redirect( $redirect );
 		exit;
 
 	}
@@ -148,8 +155,16 @@ class CGC_Groups_Actions {
 		$member_id = absint( $_REQUEST['member'] );
 
 		cgc_group_accounts()->members->remove( $member_id );
+		
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'removed' ), $redirect );
+		} else {
+			$redirect = home_url( '/settings/?message=group-member-removed#subscription' );
+		}
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'removed' ), $_SERVER['HTTP_REFERER'] ) );
+		wp_redirect( $redirect );
+
 		exit;
 
 	}
