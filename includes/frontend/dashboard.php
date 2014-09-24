@@ -21,7 +21,7 @@ $role     = cgc_group_accounts()->members->get_role();
 
 </form>
 
-
+<!--
 <table class="rcp-table" id="rcp-group-dashboard">
 	<thead>
 		<tr>
@@ -38,6 +38,7 @@ $role     = cgc_group_accounts()->members->get_role();
 		</tr>
 	</tbody>
 </table>
+-->
 <?php if( 'owner' === $role || 'admin' === $role ) : ?>
 <table class="rcp-table" id="rcp-group-dashboard-members">
 	<thead>
