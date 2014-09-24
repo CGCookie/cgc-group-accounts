@@ -2,6 +2,26 @@
 $group_id = cgc_group_accounts()->members->get_group_id();
 $role     = cgc_group_accounts()->members->get_role();
 ?>
+
+<h3>Manage Group Account</h3>
+<p>Your group account control panel. Add, remove, and promote group members!</p>
+
+<form method="post" id="add-group-member-form">
+
+	<p><strong>Add a member to your group</strong></p>
+
+	<p>Enter the email address of a user account to add to the group.</p>
+
+	<input type="text" name="user_email" id="user_email" autocomplete="off" />
+
+	<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
+	<input type="hidden" name="cgcg-action" value="add-member" />
+
+	<input type="submit" value="Add Member" />
+
+</form>
+
+
 <table class="rcp-table" id="rcp-group-dashboard">
 	<thead>
 		<tr>
@@ -56,22 +76,4 @@ $role     = cgc_group_accounts()->members->get_role();
 		<?php $i++; endforeach; ?>
 	</tbody>
 </table>
-<div class="wrap">
-
-	<h2>New Group Member</h2>
-	
-	<form method="post">
-	
-		<label for="user_email">Email</label>
-		<input type="text" name="user_email" id="user_email" class="cgc-user-search" autocomplete="off" />
-		<p class="description">Enter the email address of a user account to add to the group.</p>
-
-		<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
-		<input type="hidden" name="cgcg-action" value="add-member" />
-
-		<input type="submit" value="Add Member" />
-
-	</form>
-
-</div>
 <?php endif; ?>
