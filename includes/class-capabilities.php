@@ -53,8 +53,12 @@ class CGC_Group_Capabilities {
 
 	public function can( $task = '', $user_id = 0, $group_id = 0 ) {
 
-		if( empty( $task ) || empty( $user_id ) ) {
+		if( empty( $task ) ) {
 			return false;
+		}
+
+		if( empty( $user_id ) ) {
+			$user_id = get_current_user_id();
 		}
 
 		if( current_user_can( 'manage_users' ) ) {
