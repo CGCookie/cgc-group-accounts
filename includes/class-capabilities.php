@@ -61,6 +61,10 @@ class CGC_Group_Capabilities {
 			$user_id = get_current_user_id();
 		}
 
+		if( empty( $group_id ) ) {
+			$group_id = cgc_group_accounts()->members->get_group_id( $user_id );
+		}
+
 		if( current_user_can( 'manage_users' ) ) {
 			return true;
 		}
