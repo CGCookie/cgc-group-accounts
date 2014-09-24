@@ -103,7 +103,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( empty( $_REQUEST['user_id'] ) ) {
+		if( empty( $_REQUEST['user_email'] ) ) {
 			return;
 		}
 
@@ -112,9 +112,14 @@ class CGC_Groups_Actions {
 		}
 
 		$group_id  = absint( $_REQUEST['group'] );
-		$user_id   = absint( $_REQUEST['user_id'] );
+		$email     = sanitize_text_field( $_REQUEST['user_email'] );
+		$user      = get_user_by( 'email', $email );
 
-		cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
+		if( ! $user ) {
+			return;
+		}
+
+		cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
