@@ -50,6 +50,19 @@ $owner    = get_userdata( $group->owner_id );
 
 			</tr>
 
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="seats">Seats</label>
+				</th>
+
+				<td>
+					<input type="number" min="1" step="1" name="seats" id="seats" class="regular-text" autocomplete="off" value="<?php echo absint( $group->seats ); ?>" />
+					<p class="description">The number of seats for this group</p>
+				</td>
+
+			</tr>
+
 		</table>
 
 		<input type="hidden" name="group" id="group" value="<?php echo esc_attr( $group->group_id ); ?>" />

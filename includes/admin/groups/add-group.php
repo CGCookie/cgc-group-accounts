@@ -107,6 +107,19 @@ jQuery(document).ready(function($) {
 
 			</tr>
 
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="seats">Seats</label>
+				</th>
+
+				<td>
+					<input type="number" min="1" step="1" name="seats" id="seats" class="regular-text" autocomplete="off" />
+					<p class="description">The number of seats for this group</p>
+				</td>
+
+			</tr>
+
 		</table>
 
 		<input type="hidden" name="user_id" id="user_id" value="" />

@@ -43,8 +43,9 @@ class CGC_Groups_Actions {
 		$user_id     = absint( $_REQUEST['user_id'] );
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
+		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
-		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description ) );
+		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description, 'seats' => $seats ) );
 
 		cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id, 'role' => 'owner' ) );
 
@@ -78,8 +79,9 @@ class CGC_Groups_Actions {
 		$group       = absint( $_REQUEST['group'] );
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
+		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
-		$group_id    = cgc_group_accounts()->groups->update( $group, array( 'name' => $name, 'description' => $description ) );
+		$group_id    = cgc_group_accounts()->groups->update( $group, array( 'name' => $name, 'description' => $description, 'seats' => $seats ) );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
