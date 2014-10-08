@@ -124,6 +124,14 @@ class CGC_Groups_Actions {
 			return;
 		}
 
+		$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
+		$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
+		$seats_left  = $seats_count - $mem_count;
+
+		if( $seats_left < 1 && ! current_user_can( 'manage_options' ) ) {
+			wp_die( 'You do not have enough seats left in your group to add this members.' );
+		}
+
 		cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
 
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
