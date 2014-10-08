@@ -29,6 +29,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'name'          => '%s',
 			'description'   => '%s',
 			'member_count'  => '%d',
+			'seats'         => '%d',
 			'fixed_billing' => '%d',
 			'date_created'  => '%s',
 		);
@@ -87,6 +88,17 @@ class CGC_Groups extends CGC_Groups_DB {
 	 */
 	public function get_member_count( $group_id = 0 ) {
 		return absint( $this->get_column( 'member_count', $group_id ) );
+	}
+
+	/**
+	 * Get the number of seats
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int
+	 */
+	public function get_seats_count( $group_id = 0 ) {
+		return absint( $this->get_column( 'seats', $group_id ) );
 	}
 
 	/**
@@ -176,6 +188,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'owner_id'      => 0,
 			'description'   => '',
 			'name'          => '',
+			'seats'         => 0,
 			'member_count'  => 0,
 			'fixed_billing' => 0,
 			'date_created'  => current_time( 'mysql' ),
@@ -252,6 +265,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			`owner_id` bigint(20) NOT NULL,
 			`name` mediumtext NOT NULL,
 			`description` longtext NOT NULL,
+			`seats` bigint(20) NOT NULL,
 			`member_count` bigint(20) NOT NULL,
 			`fixed_billing` char(1) NOT NULL,
 			`date_created` datetime NOT NULL,

@@ -10,6 +10,7 @@ class CGC_Groups_Actions {
 		add_action( 'admin_init', array( $this, 'add_group' ) );
 		add_action( 'init', array( $this, 'edit_group' ) );
 		add_action( 'init', array( $this, 'add_member_to_group' ) );
+		add_action( 'init', array( $this, 'import_members_to_group' ) );
 		add_action( 'init', array( $this, 'remove_member_from_group' ) );
 		add_action( 'init', array( $this, 'make_member_admin' ) );
 		add_action( 'init', array( $this, 'make_admin_member' ) );
@@ -62,10 +63,6 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
 		if( empty( $_REQUEST['group'] ) ) {
 			return;
 		}
@@ -99,7 +96,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( ! current_user_can( 'manage_options' ) ) {
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
 			return;
 		}
 
@@ -133,6 +130,94 @@ class CGC_Groups_Actions {
 
 	}
 
+	public function import_members_to_group() {
+
+		if( empty( $_REQUEST['cgcg-action'] ) ) {
+			return;
+		}
+
+		if( 'import-members' != $_REQUEST['cgcg-action'] ) {
+			return;
+		}
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		if( empty( $_FILES['group_csv'] ) ) {
+			wp_die( 'Please upload a CSV file' );
+		}
+
+		if( empty( $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		$group_id  = absint( $_REQUEST['group'] );
+
+		if( ! class_exists( 'parseCSV' ) ) {
+
+			require_once dirname( __FILE__ ) . '/parsecsv.lib.php';
+		}
+
+		$import_file = ! empty( $_FILES['group_csv'] ) ? $_FILES['group_csv']['tmp_name'] : false;
+
+		if( ! $import_file ) {
+			wp_die( 'Something went wrong with your CSV file, please try again.' );
+		}
+
+		$csv         = new parseCSV( $import_file );
+		$members     = $csv->data;
+		$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
+		$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
+		$row_count   = count( $members );
+		$seats_left  = $seats_count - $mem_count;
+
+		if( $row_count > $seats_left ) {
+			wp_die( sprintf( 'You do not have enough seats left in your group to import this many members. You have %d seats left and you tried to import %d members', $seats_left, $row_count ) );
+		}
+
+		if( ! $members ) {
+			wp_die( 'Something went wrong with your CSV file, please try again.' );
+		}
+
+		foreach( $members as $member ) {
+
+			$exists = get_user_by( 'email', $member['email'] );
+
+			if( $exists ) {
+
+				$user_id = $exists->ID;
+
+			} else {
+
+				$user_data  = array(
+					'user_login' => $member['email'],
+					'user_email' => $member['email'],
+					'first_name' => $member['first_name'],
+					'last_name'  => $member['last_name'],
+					'user_pass'  => $member['password'],
+					'role'       => 'subscriber'
+				);
+
+				$user_id = wp_insert_user( $user_data );
+
+			}
+
+			cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
+		}
+
+
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $redirect );
+		} else {
+			$redirect = home_url( '/settings/?message=group-member-added#subscription' );
+		}
+
+		wp_redirect( $redirect );
+		exit;
+
+	}
+
 	public function remove_member_from_group() {
 
 		if( empty( $_REQUEST['cgcg-action'] ) ) {
@@ -143,7 +228,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( ! current_user_can( 'manage_options' ) ) {
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
 			return;
 		}
 
@@ -179,7 +264,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( ! current_user_can( 'manage_options' ) ) {
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
 			return;
 		}
 

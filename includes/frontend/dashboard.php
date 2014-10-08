@@ -12,12 +12,26 @@ $role     = cgc_group_accounts()->members->get_role();
 
 	<p>Enter the email address of a user account to add to the group.</p>
 
-	<input type="text" name="user_email" id="user_email" autocomplete="off" />
+	<p>
+		<input type="text" name="user_email" id="user_email" autocomplete="off" />
+		<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
+		<input type="hidden" name="cgcg-action" value="add-member" />
+		<input type="submit" value="Add Member" />
+	</p>
+</form>
 
-	<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
-	<input type="hidden" name="cgcg-action" value="add-member" />
+<form method="post" id="import-group-members-form" enctype="multipart/form-data">
 
-	<input type="submit" value="Add Member" />
+	<p><strong>Import a CSV of members into your group</strong></p>
+
+	<p>Bulk import accounts from a CSV file. <a href="#">Click here to see a sample CSV</a>.</p>
+
+	<p>
+		<input type="file" name="group_csv" id="group_csv"/>
+		<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
+		<input type="hidden" name="cgcg-action" value="import-members" />
+		<input type="submit" value="Import CSV" />
+	</p>
 
 </form>
 
