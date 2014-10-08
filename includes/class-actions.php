@@ -81,7 +81,13 @@ class CGC_Groups_Actions {
 		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
-		$group_id    = cgc_group_accounts()->groups->update( $group, array( 'name' => $name, 'description' => $description, 'seats' => $seats ) );
+		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats );
+
+		if( ! current_user_can( 'manage_options' ) ) {
+			unset( $args['seats'] );
+		}
+
+		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
