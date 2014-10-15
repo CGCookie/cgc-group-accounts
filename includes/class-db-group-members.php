@@ -140,6 +140,8 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		do_action( 'cgc_add_group_member', $add );
 
+		wp_cache_delete( 'cgc_group_' . $args['group_id'] . '_members', 'groups' );
+
 		cgc_group_accounts()->groups->increment_count( $args['group_id'] );
 
 		return true;
@@ -164,6 +166,8 @@ class CGC_Group_Members extends CGC_Groups_DB {
 		$this->delete( $user_id );
 
 		do_action( 'cgc_remove_group_member', $user_id );
+
+		wp_cache_delete( 'cgc_group_' . $args['group_id'] . '_members', 'groups' );
 
 		cgc_group_accounts()->groups->decrement_count( $group_id );
 
