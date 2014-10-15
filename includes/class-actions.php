@@ -332,7 +332,13 @@ class CGC_Groups_Actions {
 
 		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] ));
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
+		} else {
+			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
+		}
+
+		wp_redirect( $redirect );
 		exit;
 
 	}
@@ -362,7 +368,13 @@ class CGC_Groups_Actions {
 
 		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] ) );
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
+		} else {
+			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
+		}
+
+		wp_redirect( $redirect );
 		exit;
 
 	}
