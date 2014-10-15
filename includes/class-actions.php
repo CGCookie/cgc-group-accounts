@@ -60,7 +60,7 @@ class CGC_Groups_Actions {
 
 		}
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-updated' ), $_SERVER['HTTP_REFERER'] ) );
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added', 'view' => false ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
 
 	}
@@ -100,7 +100,7 @@ class CGC_Groups_Actions {
 
 		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-updated', 'view' => false ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
 
 	}
@@ -126,7 +126,7 @@ class CGC_Groups_Actions {
 		$group       = absint( $_REQUEST['group'] );
 		cgc_group_accounts()->groups->delete( $group );
 
-		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-deleted' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
 
 	}
@@ -175,7 +175,7 @@ class CGC_Groups_Actions {
 			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $redirect );
 		} else {
-			$redirect = home_url( '/settings/?message=group-member-added#subscription' );
+			$redirect = home_url( '/settings/?message=group-member-added#manage-group' );
 		}
 
 		wp_redirect( $redirect );
@@ -263,7 +263,7 @@ class CGC_Groups_Actions {
 			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $redirect );
 		} else {
-			$redirect = home_url( '/settings/?message=group-member-added#subscription' );
+			$redirect = home_url( '/settings/?message=group-member-added#manage-group' );
 		}
 
 		wp_redirect( $redirect );
@@ -298,7 +298,7 @@ class CGC_Groups_Actions {
 			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'removed' ), $redirect );
 		} else {
-			$redirect = home_url( '/settings/?message=group-member-removed#subscription' );
+			$redirect = home_url( '/settings/?message=group-member-removed#manage-group' );
 		}
 
 		wp_redirect( $redirect );

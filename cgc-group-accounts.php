@@ -133,6 +133,7 @@ final class CGC_Group_Accounts {
 		if( is_admin() ) {
 
 			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/admin/class-menu.php';
+			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/admin/class-notices.php';
 
 		} else {
 
