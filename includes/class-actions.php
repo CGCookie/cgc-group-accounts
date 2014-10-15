@@ -338,7 +338,7 @@ class CGC_Groups_Actions {
 			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
 		}
 
-		wp_redirect( $redirect );
+		header( 'Location:' . $redirect );
 		exit;
 
 	}
@@ -374,7 +374,7 @@ class CGC_Groups_Actions {
 			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
 		}
 
-		wp_redirect( $redirect );
+		header( 'Location:' . $redirect );
 		exit;
 
 	}
