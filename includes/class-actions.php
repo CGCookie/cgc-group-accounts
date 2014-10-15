@@ -32,7 +32,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( empty( $_REQUEST['user_id'] ) ) {
+		if( empty( $_REQUEST['user_email'] ) ) {
 			return;
 		}
 
@@ -40,7 +40,13 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		$user_id     = absint( $_REQUEST['user_id'] );
+		$user = get_user_by( 'email', $_REQUEST['user_email'] );
+
+		if( ! $user ) {
+			wp_die( 'No user account with that email address found' );
+		}
+
+		$user_id     = $user->ID
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
