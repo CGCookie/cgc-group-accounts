@@ -65,7 +65,7 @@ class CGC_Group_Capabilities {
 			$group_id = cgc_group_accounts()->members->get_group_id( $user_id );
 		}
 
-		if( current_user_can( 'manage_users' ) ) {
+		if( user_can( $user_id, 'edit_users' ) ) {
 			return true;
 		}
 
@@ -81,6 +81,8 @@ class CGC_Group_Capabilities {
 		} else {
 			$in_group = true;
 		}
+
+		var_dump( $in_group ); exit;
 
 		return in_array( $task, $tasks ) && $in_group;
 
