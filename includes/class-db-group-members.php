@@ -167,7 +167,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		do_action( 'cgc_remove_group_member', $user_id );
 
-		wp_cache_delete( 'cgc_group_' . $args['group_id'] . '_members', 'groups' );
+		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
 		cgc_group_accounts()->groups->decrement_count( $group_id );
 
