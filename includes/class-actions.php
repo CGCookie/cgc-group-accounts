@@ -330,6 +330,8 @@ class CGC_Groups_Actions {
 
 		cgc_group_accounts()->members->update( $member_id, array( 'role' => 'admin' ) );
 
+		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
+
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] ));
 		exit;
 
@@ -357,6 +359,8 @@ class CGC_Groups_Actions {
 		$member_id = absint( $_REQUEST['member'] );
 
 		cgc_group_accounts()->members->update( $member_id, array( 'role' => 'member' ) );
+
+		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
