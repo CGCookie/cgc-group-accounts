@@ -53,7 +53,11 @@ class CGC_Groups_Actions {
 
 		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description, 'seats' => $seats ) );
 
-		cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id, 'role' => 'owner' ) );
+		if( $group_id ) {
+
+			cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id, 'role' => 'owner' ) );
+
+		}
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-updated' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
@@ -262,7 +266,7 @@ class CGC_Groups_Actions {
 		$member_id = absint( $_REQUEST['member'] );
 
 		cgc_group_accounts()->members->remove( $member_id );
-		
+
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
 			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'removed' ), $redirect );
