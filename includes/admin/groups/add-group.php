@@ -80,7 +80,7 @@ jQuery(document).ready(function($) {
 			<tr class="form-row form-required">
 
 				<th scope="row">
-					<label for="description">description</label>
+					<label for="description">Description</label>
 				</th>
 
 				<td>
