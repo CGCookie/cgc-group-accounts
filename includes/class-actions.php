@@ -335,7 +335,7 @@ class CGC_Groups_Actions {
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
 		} else {
-			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
+			$redirect = home_url( '/settings/?message=role-updated' ) . '#manage-group';
 		}
 
 		header( 'Location:' . $redirect );
@@ -371,7 +371,7 @@ class CGC_Groups_Actions {
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
 		} else {
-			$redirect = home_url( '/settings/?message=role-updated#manage-group' );
+			$redirect = home_url( '/settings/?message=role-updated' ) . '#manage-group';
 		}
 
 		header( 'Location:' . $redirect );
