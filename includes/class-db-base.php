@@ -84,7 +84,7 @@ abstract class CGC_Groups_DB {
 
 		do_action( 'affwp_post_insert_' . $type, $wpdb->insert_id, $data );
 
-		return (bool) $wpdb->insert_id;
+		return $wpdb->insert_id;
 	}
 
 	public function update( $row_id, $data = array(), $where = '' ) {
