@@ -41,7 +41,10 @@
 					<td><?php echo $group->date_created; ?></td>
 					<td>
 						<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&view=edit&group=' . $group->group_id ) ); ?>">Edit</a>&nbsp;|&nbsp;
-						<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group->group_id ) ); ?>">Members</a>
+						<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group->group_id ) ); ?>">Members</a>&nbsp;|&nbsp;
+						<span class="trash">
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&cgcg-action=delete-group&group=' . $group->group_id ) ); ?>" class="submitdelete" style="color:#a00">Delete</a>
+						</span>
 					</td>
 				</tr>
 			<?php $i++;

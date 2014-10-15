@@ -9,6 +9,7 @@ class CGC_Groups_Actions {
 
 		add_action( 'admin_init', array( $this, 'add_group' ) );
 		add_action( 'init', array( $this, 'edit_group' ) );
+		add_action( 'init', array( $this, 'delete_group' ) );
 		add_action( 'init', array( $this, 'add_member_to_group' ) );
 		add_action( 'init', array( $this, 'import_members_to_group' ) );
 		add_action( 'init', array( $this, 'remove_member_from_group' ) );
@@ -98,6 +99,32 @@ class CGC_Groups_Actions {
 		}
 
 		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
+
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
+		exit;
+
+	}
+
+	public function delete_group() {
+
+		if( empty( $_REQUEST['cgcg-action'] ) ) {
+			return;
+		}
+
+		if( 'delete-group' != $_REQUEST['cgcg-action'] ) {
+			return;
+		}
+
+		if( empty( $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		if( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$group       = absint( $_REQUEST['group'] );
+		cgc_group_accounts()->groups->delete( $group );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-added' ), $_SERVER['HTTP_REFERER'] ) );
 		exit;
