@@ -10,7 +10,7 @@ $role     = cgc_group_accounts()->members->get_role();
 
 	<p><strong>Add a member to your group</strong></p>
 
-	<p>Enter the email address of a user account to add to the group.</p>
+	<p>Enter the email address of a user account to add to the group. This email must be already registered with a user account.</p>
 
 	<p>
 		<input type="text" name="user_email" id="user_email" autocomplete="off" />
