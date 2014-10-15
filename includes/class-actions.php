@@ -46,7 +46,7 @@ class CGC_Groups_Actions {
 			wp_die( 'No user account with that email address found' );
 		}
 
-		$user_id     = $user->ID
+		$user_id     = $user->ID;
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
