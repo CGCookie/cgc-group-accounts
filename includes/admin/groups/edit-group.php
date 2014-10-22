@@ -18,7 +18,7 @@ $owner    = get_userdata( $group->owner_id );
 				</th>
 
 				<td>
-					<input type="text" name="name" id="name" class="regular-text" autocomplete="off" value="<?php echo esc_attr( $group->name ); ?>"/>
+					<input type="text" name="name" id="name" class="regular-text" autocomplete="off" value="<?php echo esc_attr( stripslashes( $group->name ) ); ?>"/>
 					<p class="description">The name of this group</p>
 				</td>
 
@@ -31,7 +31,7 @@ $owner    = get_userdata( $group->owner_id );
 				</th>
 
 				<td>
-					<input type="text" name="description" id="description" class="regular-text" autocomplete="off" value="<?php echo esc_attr( $group->description ); ?>"/>
+					<input type="text" name="description" id="description" class="regular-text" autocomplete="off" value="<?php echo esc_attr( stripslashes( $group->description ) ); ?>"/>
 					<p class="description">The description of this group</p>
 				</td>
 

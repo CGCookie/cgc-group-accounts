@@ -35,10 +35,10 @@
 			$i = 1;
 			foreach( $groups as $key => $group ) : ?>
 				<tr<?php echo $i & 1 ? ' class="alternate"' : ''; ?>>
-					<td><?php echo $group->name; ?></td>
+					<td><?php echo stripslashes( $group->name ); ?></td>
 					<td><?php echo $group->group_id; ?></td>
 					<td><?php echo $group->owner_id; ?></td>
-					<td><?php echo $group->description; ?></td>
+					<td><?php echo stripslashes( $group->description ); ?></td>
 					<td><?php echo absint( $group->member_count ); ?></td>
 					<td><?php echo absint( $group->seats ); ?></td>
 					<td><?php echo $group->date_created; ?></td>
