@@ -31,7 +31,7 @@ $owner    = get_userdata( $group->owner_id );
 				</th>
 
 				<td>
-					<?php wp_editor( stripslashes( $group->description ), 'description', array( 'textarea_name' => 'description' ) ); ?>
+					<?php wp_editor( wpautop( wp_kses_post( wptexturize( $group->description ) ) ), 'description', array( 'textarea_name' => 'description' ) ); ?>
 					<p class="description">The description of this group</p>
 				</td>
 

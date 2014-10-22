@@ -49,7 +49,7 @@ class CGC_Groups_Actions {
 
 		$user_id     = $user->ID;
 		$name        = sanitize_text_field( $_REQUEST['name'] );
-		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
+		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
 		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description, 'seats' => $seats ) );
@@ -89,7 +89,7 @@ class CGC_Groups_Actions {
 
 		$group       = absint( $_REQUEST['group'] );
 		$name        = sanitize_text_field( $_REQUEST['name'] );
-		$description = ! empty( $_REQUEST['description'] ) ? sanitize_text_field( $_REQUEST['description'] ) : '';
+		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
 		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats );
