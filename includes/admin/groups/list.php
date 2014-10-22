@@ -9,6 +9,7 @@
 				<th>Owner</th>
 				<th>Description</th>
 				<th>Members</th>
+				<th>Seats</th>
 				<th>Date Created</th>
 				<th>Actions</th>
 			</tr>
@@ -20,6 +21,7 @@
 				<th>Owner</th>
 				<th>Description</th>
 				<th>Members</th>
+				<th>Seats</th>
 				<th>Date Created</th>
 				<th>Actions</th>
 			</tr>
@@ -38,6 +40,7 @@
 					<td><?php echo $group->owner_id; ?></td>
 					<td><?php echo $group->description; ?></td>
 					<td><?php echo absint( $group->member_count ); ?></td>
+					<td><?php echo absint( $group->seats ); ?></td>
 					<td><?php echo $group->date_created; ?></td>
 					<td>
 						<a href="<?php echo esc_url( admin_url( 'admin.php?page=cgc-groups&view=edit&group=' . $group->group_id ) ); ?>">Edit</a>&nbsp;|&nbsp;
