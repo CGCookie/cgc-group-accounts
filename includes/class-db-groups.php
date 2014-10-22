@@ -200,6 +200,8 @@ class CGC_Groups extends CGC_Groups_DB {
 			return false;
 		}
 
+		$args['description'] = wp_kses( $args['description'], wp_kses_allowed_html( 'post' ) );
+
 		$add = $this->insert( $args, 'group' );
 
 		if( $add ) {
