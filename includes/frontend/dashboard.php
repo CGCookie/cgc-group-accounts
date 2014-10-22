@@ -24,7 +24,7 @@ $role     = cgc_group_accounts()->members->get_role();
 
 	<p><strong>Import a CSV of members into your group</strong></p>
 
-	<p>Bulk import accounts from a CSV file. <a href="#">Click here to see a sample CSV</a>.</p>
+	<p>Bulk import accounts from a CSV file. <a href="https://s3.amazonaws.com/cgc-cdn-bucket-01/groups/cgc-group-example.csv">Click here to see a sample CSV</a>.</p>
 
 	<p>
 		<input type="file" name="group_csv" id="group_csv"/>
