@@ -123,7 +123,9 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		$group       = absint( $_REQUEST['group'] );
+		$group = absint( $_REQUEST['group'] );
+
+		cgc_group_accounts()->members->remove_all_from_group( $group );
 		cgc_group_accounts()->groups->delete( $group );
 
 		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-deleted' ), $_SERVER['HTTP_REFERER'] ) );

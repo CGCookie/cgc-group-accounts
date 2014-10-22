@@ -174,6 +174,28 @@ class CGC_Group_Members extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Deletes all members from a specific group. This is for when we delete a group
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int|false
+	 */
+	public function remove_all_from_group( $group_id = 0 ) {
+
+		global $wpdb;
+
+		if(  empty( $group_id ) ) {
+			return false;
+		}
+
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE group_id = '%d'", $group_id ) );
+
+		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
+
+
+	}
+
+	/**
 	 * Create the table
 	 *
 	 * @access  public
