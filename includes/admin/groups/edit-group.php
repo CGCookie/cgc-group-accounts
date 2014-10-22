@@ -31,7 +31,7 @@ $owner    = get_userdata( $group->owner_id );
 				</th>
 
 				<td>
-					<input type="text" name="description" id="description" class="regular-text" autocomplete="off" value="<?php echo esc_attr( stripslashes( $group->description ) ); ?>"/>
+					<?php wp_editor( stripslashes( $group->description ), 'description', array( 'textarea_name' => 'description' ) ); ?>
 					<p class="description">The description of this group</p>
 				</td>
 
