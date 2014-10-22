@@ -4,17 +4,16 @@ class CGC_Groups_Frontend_Notices {
 
 	function __construct() {
 
-		add_action( 'cgc_notices', array( $this, 'show_notices' ) );
+		add_action( 'init', array( $this, 'add_notices' ) );
 	}
 
 
-	public function show_notices() {
+	public function add_notices() {
 
 		if( ! isset( $_GET['message'] ) ) {
 			return;
 		}
 
-		$class  = 'updated';
 		$notice = $_GET['message'];
 
 		switch( $notice ) {
@@ -63,8 +62,8 @@ class CGC_Groups_Frontend_Notices {
 
 		}
 
-		if ( ! empty( $message ) ) {
-			echo '<div class="' . esc_attr( $class ) . '"><p><strong>' .  $message  . '</strong></p></div>';
+		if ( ! empty( $message ) && function_exists( 'cgc_add_notice' ) ) {
+			cgc_add_notice( $message, 'success' );
 		}
 
 	}
