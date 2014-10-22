@@ -138,6 +138,7 @@ final class CGC_Group_Accounts {
 		} else {
 
 			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/class-shortcodes.php';
+			require_once CGC_GROUPS_PLUGIN_DIR . 'includes/frontend/class-notices.php';
 
 		}
 
