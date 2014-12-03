@@ -35,24 +35,6 @@ $role     = cgc_group_accounts()->members->get_role();
 
 </form>
 
-<!--
-<table class="rcp-table" id="rcp-group-dashboard">
-	<thead>
-		<tr>
-			<th>Group Name</th>
-			<th>Your Role</th>
-			<th>Group Members</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td><?php echo cgc_group_accounts()->members->get_group_name(); ?></td>
-			<td><?php echo $role; ?></td>
-			<td><?php echo cgc_group_accounts()->groups->get_member_count( $group_id ); ?></td>
-		</tr>
-	</tbody>
-</table>
--->
 <?php if( 'owner' === $role || 'admin' === $role ) : ?>
 <table class="rcp-table" id="rcp-group-dashboard-members">
 	<thead>
