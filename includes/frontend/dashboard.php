@@ -240,6 +240,7 @@ jQuery( document ).ready( function($) {
 
 	$('#group-add-member-confirmation a.close-modal').click(function(e) {
 		e.preventDefault();
+		$('.group-member-gravatar img').remove();
 		$('a.close-reveal-modal').trigger('click');
 	});
 
