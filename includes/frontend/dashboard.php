@@ -268,7 +268,7 @@ jQuery( document ).ready( function($) {
 
 	});
 
-	$('#group-add-member-confirmation a.close-modal').click(function(e) {
+	$('.reveal-modal a.close-modal').click(function(e) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
 	});
