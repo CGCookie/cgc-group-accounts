@@ -6,6 +6,8 @@ $role     = cgc_group_accounts()->members->get_role();
 <h3>Manage Group Account</h3>
 <p>Your group account control panel. Add, remove, and promote group members!</p>
 <script type="text/javascript">
+jQuery( document ).ready( function($) {
+
 function md5(str) {
   //  discuss at: http://phpjs.org/functions/md5/
   // original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -219,7 +221,6 @@ function md5(str) {
   return temp.toLowerCase();
 }
 
-jQuery( document ).ready( function($) {
 	$('#group-add-member-confirmation a.close-modal').click(function(e) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
