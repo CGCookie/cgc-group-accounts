@@ -240,6 +240,7 @@ jQuery( document ).ready( function($) {
 
 	$('#add-group-member-form').submit(function(e) {
 
+
 		if( ! $('#group-add-member-confirmation').is(':visible' ) ) {
 
 			e.preventDefault();
@@ -249,17 +250,9 @@ jQuery( document ).ready( function($) {
 
 	});
 
-	$('#group-add-member-confirmation a.close-modal').click(function(e) {
-		e.preventDefault();
-		$('a.close-reveal-modal').trigger('click');
-	});
-
-	$('#group-add-member-confirmation a.close-modal, #group-add-member-confirmation .close-reveal-modal').click(function(e) {
-		e.preventDefault();
-		$('.group-member-gravatar img').remove();
-	});
-
 	$('#add-group-member-form').click(function() {
+
+		$('.group-member-gravatar img').remove();
 
 		// get the email
 		var email = $('#user_email').val();
@@ -269,6 +262,11 @@ jQuery( document ).ready( function($) {
 		// append this new image to some div, or whatever
 		$('.group-member-gravatar').append(gravatar);
 
+	});
+
+	$('#group-add-member-confirmation a.close-modal').click(function(e) {
+		e.preventDefault();
+		$('a.close-reveal-modal').trigger('click');
 	});
 
 });
