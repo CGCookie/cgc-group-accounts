@@ -6,7 +6,7 @@ $role     = cgc_group_accounts()->members->get_role();
 <h3>Manage Group Account</h3>
 <p>Your group account control panel. Add, remove, and promote group members!</p>
 <script type="text/javascript">
-jQuery( document ).ready( function($) ) {
+jQuery( document ).ready( function($) {
 	$('#group-add-member-confirmation a.close-modal').click(function(e) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
