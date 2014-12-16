@@ -157,26 +157,30 @@ class CGC_Groups_Actions {
 			$error = 'no-group';
 		}
 
-		$group_id  = absint( $_REQUEST['group'] );
-		$email     = sanitize_text_field( $_REQUEST['user_email'] );
-		$user      = get_user_by( 'email', $email );
-
-		if( ! $user ) {
-			$error = 'no-user';
-		}
-
-		$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
-		$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
-		$seats_left  = $seats_count - $mem_count;
-
-		if( $seats_left < 1 && ! current_user_can( 'manage_options' ) ) {
-			wp_die( 'You do not have enough seats left in your group to add this members.' );
-		}
-
 		if( ! $error ) {
 
-			cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
-			$message = 'group-member-added';
+			$group_id  = absint( $_REQUEST['group'] );
+			$email     = sanitize_text_field( $_REQUEST['user_email'] );
+			$user      = get_user_by( 'email', $email );
+
+			if( ! $user ) {
+				$error = 'no-user';
+			}
+
+			$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
+			$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
+			$seats_left  = $seats_count - $mem_count;
+
+			if( $seats_left < 1 && ! current_user_can( 'manage_options' ) ) {
+				wp_die( 'You do not have enough seats left in your group to add this members.' );
+			}
+
+			if( ! $error ) {
+
+				cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
+				$message = 'group-member-added';
+
+			}
 
 		} else {
 
