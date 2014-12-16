@@ -371,7 +371,7 @@ jQuery( document ).ready( function($) {
 						<p>By removing this user, you will be removing all group access for this member</p>
 
 						<a href="#" class="close-modal">Nah, nevermind</a>
-						<a href="<?php echo esc_url( home_url( 'index.php?cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">
+						<a href="<?php echo esc_url( home_url( 'index.php?cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Remove Member</a>
 
 						<a class="close-reveal-modal">&#215;</a>
 					</div>
