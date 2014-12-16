@@ -238,6 +238,10 @@ $role     = cgc_group_accounts()->members->get_role();
 
 jQuery( document ).ready( function($) {
 
+	/*
+     * Add member validation
+     */
+
 	$('#add-group-member-form').submit(function(e) {
 
 
@@ -268,6 +272,20 @@ jQuery( document ).ready( function($) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
 	});
+
+
+	/*
+	 * CSV Import validation
+	 */
+
+	 $('#import-group-members-form').submit(function(e) {
+
+	 	if( ! $('#group_csv').val() ) {
+	 		alert( 'Please select a CSV file' );
+	 		e.preventDefault();
+	 	}
+	
+	 });
 
 });
 </script>
