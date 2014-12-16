@@ -11,6 +11,19 @@ jQuery( document ).ready( function($) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
 	});
+
+	$('#group-add-member-submit').click(function() {
+
+		// get the email
+		var email = $('#user_email').val();
+
+		// create a new image with the src pointing to the user's gravatar
+		var gravatar = $('<img>').attr({src: 'http://www.gravatar.com/avatar/' + md5(email)});
+		// append this new image to some div, or whatever
+		$('.group-member-gravatar').append(gravatar);
+
+	});
+
 });
 </script>
 <form method="post" id="add-group-member-form">
@@ -23,14 +36,13 @@ jQuery( document ).ready( function($) {
 		<input type="text" name="user_email" id="user_email" autocomplete="off" />
 		<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
 		<input type="hidden" name="cgcg-action" value="add-member" />
-		<a href="#" data-reveal-id="group-add-member-confirmation" data-dismissmodalclass="close-modal">Add Member</a>
+		<a href="#" data-reveal-id="group-add-member-confirmation" id="group-add-member-submit">Add Member</a>
 
 	</p>
 
 	<div id="group-add-member-confirmation" class="reveal-modal">
 		<h4>Add a new member to your group</h4>
 		<div class="group-member-gravatar">
-
 		</div>
 		<p><strong>Confirm adding this member</strong></p>
 		<p>By adding this user to your group membership, one seat will be reduced from your available</p>
