@@ -14,6 +14,7 @@ class CGC_Groups_Frontend_Notices {
 			return;
 		}
 
+		$type   = 'success';
 		$notice = $_GET['message'];
 
 		switch( $notice ) {
@@ -60,10 +61,36 @@ class CGC_Groups_Frontend_Notices {
 
 				break;
 
+			case 'no-user' :
+
+				$message = 'That email does not appear to exist in our system';
+				$type    = 'error';
+
+				break;
+
+			case 'empty-email' :
+
+				$message = 'Please enter an email address';
+				$type    = 'error';
+
+				break;
+
+			case 'no-permission';
+				$message = 'You do not have permission to perform that action';
+				$type    = 'error';
+
+				break;
+
+			case 'no-group';
+				$message = 'Oops, no group ID was specified. How did that happen? We do not know';
+				$type    = 'error';
+
+				break;
+
 		}
 
 		if ( ! empty( $message ) && function_exists( 'cgc_add_notice' ) ) {
-			cgc_add_notice( $message, 'success' );
+			cgc_add_notice( $message, $type );
 		}
 
 	}
