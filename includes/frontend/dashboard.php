@@ -284,7 +284,7 @@ jQuery( document ).ready( function($) {
 	 		alert( 'Please select a CSV file' );
 	 		e.preventDefault();
 	 	}
-	
+
 	 });
 
 });
@@ -360,7 +360,22 @@ jQuery( document ).ready( function($) {
 			<td><?php echo $member->role; ?></td>
 			<td>
 				<?php if( 'owner' != $member->role ) : ?>
-					<a href="<?php echo esc_url( home_url( 'index.php?cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Remove from Group</a>&nbsp;|&nbsp;
+					<div id="group-remove-member-confirmation-<?php echo $member->user_id; ?>" class="reveal-modal">
+						<h4>Confirm member removal</h4>
+						<div class="group-member-gravatar">
+							<?php echo get_avatar( $member->user_id ); ?>
+							<span class="member-name"><?php echo $user_data->display_name; ?></span>
+							<span class="member-email"><?php echo $user_data->user_email; ?></span>
+						</div>
+						<p><strong>Confirm removal of this member</strong></p>
+						<p>By removing this user, you will be removing all group access for this member</p>
+
+						<a href="#" class="close-modal">Nah, nevermind</a>
+						<a href="<?php echo esc_url( home_url( 'index.php?cgcg-action=remove-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">
+
+						<a class="close-reveal-modal">&#215;</a>
+					</div>
+					<a href="#" data-reveal-id="group-remove-member-confirmation-<?php echo $member->user_id; ?>">Remove from Group</a>&nbsp;|&nbsp;
 					<?php if( 'admin' == $member->role ) : ?>
 						<a href="<?php echo esc_url( admin_url( 'index.php?cgcg-action=make-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Member</a>
 					<?php else : ?>
