@@ -246,10 +246,10 @@ jQuery( document ).ready( function($) {
 	$('#group-add-member-submit').click(function() {
 
 		// get the email
-		var email = $('#user_email').val().md5();
+		var email = $('#user_email').val();
 
 		// create a new image with the src pointing to the user's gravatar
-		var gravatar = $('<img>').attr({src: 'http://www.gravatar.com/avatar/' + email });
+		var gravatar = $('<img>').attr({src: 'http://www.gravatar.com/avatar/' + $.md5( email ) });
 		// append this new image to some div, or whatever
 		$('.group-member-gravatar').append(gravatar);
 
