@@ -16,13 +16,6 @@ $role     = cgc_group_accounts()->members->get_role();
 
 	<?php if( 'owner' === $role || 'admin' === $role ) : ?>
 		<table class="rcp-table" id="rcp-group-dashboard-members">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Role</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
 			<tbody>
 				<?php foreach( cgc_group_accounts()->groups->get_members( $group_id ) as $member ) : ?>
 				
@@ -36,7 +29,11 @@ $role     = cgc_group_accounts()->members->get_role();
 				?>
 
 				<tr<?php echo $i & 1 ? ' class="alternate"' : ''; ?>>
-					<td><?php echo $user_data->display_name; ?></td>
+					<td class="member-number"><?php echo $i; ?></td>
+					<td class="member-avatar">
+						<?php echo get_avatar( $member->user_id ); ?>
+					</td>
+					<td class="member-name"><?php echo $user_data->display_name; ?></td>
 					<td><?php echo $member->role; ?></td>
 					<td>
 						<?php if( 'owner' != $member->role ) : ?>
