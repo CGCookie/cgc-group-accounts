@@ -12,6 +12,7 @@ class CGC_Group_Shortcodes {
 
 		ob_start();
 		
+		wp_enqueue_script( 'groups-dashboard', CGC_GROUPS_PLUGIN_URL . 'includes/frontend/groups-dashboard.js', array( 'jquery' ), filemtime( CGC_GROUPS_PLUGIN_DIR . 'includes/frontend/groups-dashboard.js' ) );
 		include CGC_GROUPS_PLUGIN_DIR . 'includes/frontend/dashboard.php';
 
 		return ob_get_clean();
