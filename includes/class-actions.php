@@ -135,6 +135,8 @@ class CGC_Groups_Actions {
 
 	public function add_member_to_group() {
 
+		$error = false;
+
 		if( empty( $_REQUEST['cgcg-action'] ) ) {
 			return;
 		}
@@ -144,15 +146,15 @@ class CGC_Groups_Actions {
 		}
 
 		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
-			return;
+			$error = 'no-permission';
 		}
 
 		if( empty( $_REQUEST['user_email'] ) ) {
-			return;
+			$error = 'empty-email';
 		}
 
 		if( empty( $_REQUEST['group'] ) ) {
-			return;
+			$error = 'no-group';
 		}
 
 		$group_id  = absint( $_REQUEST['group'] );
@@ -160,7 +162,7 @@ class CGC_Groups_Actions {
 		$user      = get_user_by( 'email', $email );
 
 		if( ! $user ) {
-			return;
+			$error = 'no-user';
 		}
 
 		$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
@@ -171,13 +173,22 @@ class CGC_Groups_Actions {
 			wp_die( 'You do not have enough seats left in your group to add this members.' );
 		}
 
-		cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
+		if( ! $error ) {
+
+			cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
+			$message = 'group-member-added';
+
+		} else {
+
+			$message = $error;
+		}
+
 
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
 			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'added' ), $redirect );
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => $message ), $redirect );
 		} else {
-			$redirect = home_url( '/settings/?message=group-member-added#manage-group' );
+			$redirect = home_url( '/settings/?message=' . $message . '#manage-group' );
 		}
 
 		wp_redirect( $redirect );
