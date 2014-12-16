@@ -10,6 +10,7 @@ $role     = cgc_group_accounts()->members->get_role();
 	<li class="group-tab-active"><a href="#group-tab-members">Members</a></li>
 	<li><a href="#group-tab-settings">Group Settings</a></li>
 	<li><a href="#group-tab-billing">Billing</a></li>
+	<li><a href="#group-tab-support">Support</a></li>
 </ul>
 
 <div class="group-tab-content" id="group-tab-members">
@@ -117,4 +118,8 @@ $role     = cgc_group_accounts()->members->get_role();
 
 <div class="group-tab-content" id="group-tab-billing" style="display:none;">
 	<p>Coming soon</p>
+</div>
+
+<div class="group-tab-content" id="group-tab-support" style="display:none;">
+	<p>For assistance with your group account, please email us: <a href="mailto:support@cgcookie.com">support@cgcookie.com</a></p>
 </div>
