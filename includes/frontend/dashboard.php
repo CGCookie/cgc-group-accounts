@@ -238,6 +238,17 @@ $role     = cgc_group_accounts()->members->get_role();
 
 jQuery( document ).ready( function($) {
 
+	$('#add-group-member-form').submit(function(e) {
+
+		if( ! $('#group-add-member-confirmation:visible' ) ) {
+
+			e.preventDefault();
+			$('#group-add-member-submit').trigger('click');
+	
+		}
+
+	});
+
 	$('#group-add-member-confirmation a.close-modal').click(function(e) {
 		e.preventDefault();
 		$('a.close-reveal-modal').trigger('click');
@@ -248,7 +259,7 @@ jQuery( document ).ready( function($) {
 		$('.group-member-gravatar img').remove();
 	});
 
-	$('#group-add-member-submit').click(function() {
+	$('#add-group-member-form').click(function() {
 
 		// get the email
 		var email = $('#user_email').val();
