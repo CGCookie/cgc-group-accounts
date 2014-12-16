@@ -16,8 +16,25 @@ $role     = cgc_group_accounts()->members->get_role();
 		<input type="text" name="user_email" id="user_email" autocomplete="off" />
 		<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
 		<input type="hidden" name="cgcg-action" value="add-member" />
-		<input type="submit" value="Add Member" />
+		<button data-reveal-id="group-add-member-confirmation">Add Member</button>
+
 	</p>
+
+	<div id="group-add-member-confirmation" class="reveal-modal">
+		<h4>Add a new member to your group</h4>
+		<div class="group-member-gravatar">
+
+		</div>
+		<p><strong>Confirm adding this member</strong></p>
+		<p>By adding this user to your group membership, one seat will be reduced from your available</p>
+
+		<button class="close-reveal-modal">Nah, nevermind</button>
+		<input type="submit" value="Add Member" />
+
+		<p><em>By adding this member to your account, you agree to the group <a href="#">terms of use</a>.</em></p>
+
+	</div>
+
 </form>
 
 <form method="post" id="import-group-members-form" enctype="multipart/form-data">
