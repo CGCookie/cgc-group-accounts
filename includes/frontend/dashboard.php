@@ -240,7 +240,7 @@ jQuery( document ).ready( function($) {
 
 	$('#add-group-member-form').submit(function(e) {
 
-		if( ! $('#group-add-member-confirmation:visible' ) ) {
+		if( ! $('#group-add-member-confirmation').is(':visible' ) ) {
 
 			e.preventDefault();
 			$('#group-add-member-submit').trigger('click');
