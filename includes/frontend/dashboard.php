@@ -7,8 +7,9 @@ $role     = cgc_group_accounts()->members->get_role();
 <p>Your group account control panel. Add, remove, and promote group members!</p>
 <script type="text/javascript">
 jQuery( document ).ready( function($) ) {
-	$('#group-add-member-confirmation a.close-modal').click(function() {
-		$('#group-add-member-confirmation').trigger('reveal:close');
+	$('#group-add-member-confirmation a.close-modal').click(function(e) {
+		e.preventDefault();
+		$('a.close-reveal-modal').trigger('click');
 	});
 });
 </script>
@@ -38,7 +39,7 @@ jQuery( document ).ready( function($) ) {
 		<input type="submit" value="Add Member" />
 
 		<p><em>By adding this member to your account, you agree to the group <a href="#">terms of use</a>.</em></p>
-
+		<a class="close-reveal-modal">&#215;</a>
 	</div>
 
 </form>
