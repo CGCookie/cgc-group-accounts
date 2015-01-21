@@ -20,7 +20,7 @@ if ( ! class_exists( 'CGC_Group_Accounts' ) ) :
  */
 final class CGC_Group_Accounts {
 
-	/** Singleton *************************************************************/
+	/** Singleton ************************************************************/
 
 	/**
 	 * @var CGC_Group_Accounts The one true CGC_Group_Accounts
