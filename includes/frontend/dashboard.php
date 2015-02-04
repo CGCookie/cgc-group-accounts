@@ -121,14 +121,19 @@ $role     = cgc_group_accounts()->members->get_role();
 
 		<p>
 			<label for="group_name">The name of your group.</label>
-			<input type="text" name="group_name" id="group_name"/>
+			<input type="text" name="name" id="group_name"/>
 		</p>
 
 		<p>
 			<label for="group_description">About your group.</label>
-			<textarea name="group_description" id="group_description"></textarea>
+			<textarea name="description" id="group_description"></textarea>
 		</p>
 
+		<p>
+			<input type="hidden" name="group" value="<?php echo absint( $group_id ); ?>" />
+			<input type="hidden" name="cgcg-action" value="edit-group" />
+			<input type="submit" value="Update Group" />
+		</p>
 	</form>
 
 </div>
