@@ -16,6 +16,52 @@ $role     = cgc_group_accounts()->members->get_role();
 <div class="group-tab-content" id="group-tab-members">
 
 	<?php if( 'owner' === $role || 'admin' === $role ) : ?>
+
+		<form method="post" id="add-group-member-form">
+
+			<p><strong>Add a member to your group</strong></p>
+
+			<p>Enter the email address of a user account to add to the group. This email must be already registered with a user account.</p>
+
+			<p>
+				<input type="text" name="user_email" id="user_email" autocomplete="off" />
+				<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
+				<input type="hidden" name="cgcg-action" value="add-member" />
+				<a href="#" data-reveal-id="group-add-member-confirmation" id="group-add-member-submit">Add Member</a>
+
+			</p>
+
+			<div id="group-add-member-confirmation" class="reveal-modal">
+				<h4>Add a new member to your group</h4>
+				<div class="group-member-gravatar">
+				</div>
+				<p><strong>Confirm adding this member</strong></p>
+				<p>By adding this user to your group membership, one seat will be reduced from your available</p>
+
+				<a href="#" class="close-modal">Nah, nevermind</a>
+				<input type="submit" value="Add Member" />
+
+				<p><em>By adding this member to your account, you agree to the group <a href="#">terms of use</a>.</em></p>
+				<a class="close-reveal-modal">&#215;</a>
+			</div>
+
+		</form>
+
+		<form method="post" id="import-group-members-form" enctype="multipart/form-data">
+
+			<p><strong>Import a CSV of members into your group</strong></p>
+
+			<p>Bulk import accounts from a CSV file. <a href="https://s3.amazonaws.com/cgc-cdn-bucket-01/groups/cgc-group-example.csv">Click here to see a sample CSV</a>.</p>
+
+			<p>
+				<input type="file" name="group_csv" id="group_csv"/>
+				<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
+				<input type="hidden" name="cgcg-action" value="import-members" />
+				<input type="submit" value="Import CSV" />
+			</p>
+
+		</form>
+
 		<table class="rcp-table" id="rcp-group-dashboard-members">
 			<tbody>
 				<?php foreach( cgc_group_accounts()->groups->get_members( $group_id ) as $member ) : ?>
@@ -70,50 +116,21 @@ $role     = cgc_group_accounts()->members->get_role();
 </div>
 
 <div class="group-tab-content" id="group-tab-settings" style="display:none;">
-	<form method="post" id="add-group-member-form">
-
-		<p><strong>Add a member to your group</strong></p>
-
-		<p>Enter the email address of a user account to add to the group. This email must be already registered with a user account.</p>
+	
+	<form method="post" id="group-settings-form">
 
 		<p>
-			<input type="text" name="user_email" id="user_email" autocomplete="off" />
-			<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
-			<input type="hidden" name="cgcg-action" value="add-member" />
-			<a href="#" data-reveal-id="group-add-member-confirmation" id="group-add-member-submit">Add Member</a>
-
+			<label for="group_name">The name of your group.</label>
+			<input type="text" name="group_name" id="group_name"/>
 		</p>
 
-		<div id="group-add-member-confirmation" class="reveal-modal">
-			<h4>Add a new member to your group</h4>
-			<div class="group-member-gravatar">
-			</div>
-			<p><strong>Confirm adding this member</strong></p>
-			<p>By adding this user to your group membership, one seat will be reduced from your available</p>
-
-			<a href="#" class="close-modal">Nah, nevermind</a>
-			<input type="submit" value="Add Member" />
-
-			<p><em>By adding this member to your account, you agree to the group <a href="#">terms of use</a>.</em></p>
-			<a class="close-reveal-modal">&#215;</a>
-		</div>
-
-	</form>
-
-	<form method="post" id="import-group-members-form" enctype="multipart/form-data">
-
-		<p><strong>Import a CSV of members into your group</strong></p>
-
-		<p>Bulk import accounts from a CSV file. <a href="https://s3.amazonaws.com/cgc-cdn-bucket-01/groups/cgc-group-example.csv">Click here to see a sample CSV</a>.</p>
-
 		<p>
-			<input type="file" name="group_csv" id="group_csv"/>
-			<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
-			<input type="hidden" name="cgcg-action" value="import-members" />
-			<input type="submit" value="Import CSV" />
+			<label for="group_description">About your group.</label>
+			<textarea name="group_description" id="group_description"></textarea>
 		</p>
 
 	</form>
+
 </div>
 
 <div class="group-tab-content" id="group-tab-billing" style="display:none;">
