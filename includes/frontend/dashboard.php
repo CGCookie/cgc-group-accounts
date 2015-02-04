@@ -9,7 +9,7 @@ $role     = cgc_group_accounts()->members->get_role();
 <ul id="group-tabs">
 	<li class="group-tab-active"><a href="#group-tab-members">Members</a></li>
 	<li><a href="#group-tab-settings">Group Settings</a></li>
-	<li><a href="#group-tab-billing">Billing</a></li>
+	<!--<li><a href="#group-tab-billing">Billing</a></li>-->
 	<li><a href="#group-tab-support">Support</a></li>
 </ul>
 
