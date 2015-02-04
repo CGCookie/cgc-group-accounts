@@ -27,7 +27,7 @@ $role     = cgc_group_accounts()->members->get_role();
 				<input type="text" name="user_email" id="user_email" autocomplete="off" />
 				<input type="hidden" name="group" id="group" value="<?php echo absint( $group_id ); ?>" />
 				<input type="hidden" name="cgcg-action" value="add-member" />
-				<button data-reveal-id="group-add-member-confirmation" id="group-add-member-submit" class="button">Add Member</button>
+				<a href="#" data-reveal-id="group-add-member-confirmation" class="button" id="group-add-member-submit">Add Member</a>
 
 			</p>
 
