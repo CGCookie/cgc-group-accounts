@@ -121,12 +121,12 @@ $role     = cgc_group_accounts()->members->get_role();
 
 		<p>
 			<label for="group_name">The name of your group.</label>
-			<input type="text" name="name" id="group_name"/>
+			<input type="text" name="name" id="group_name" value="<?php echo esc_attr( cgc_group_accounts()->groups->get_name( $group_id ) ); ?>"/>
 		</p>
 
 		<p>
 			<label for="group_description">About your group.</label>
-			<textarea name="description" id="group_description"></textarea>
+			<textarea name="description" id="group_description"><?php echo cgc_group_accounts()->groups->get_description( $group_id ); ?></textarea>
 		</p>
 
 		<p>
