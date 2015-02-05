@@ -38,10 +38,41 @@ jQuery( document ).ready( function($) {
 		// get the email
 		var email = $('#user_email').val();
 
-		// create a new image with the src pointing to the user's gravatar
-		var gravatar = $('<img>').attr({src: 'http://www.gravatar.com/avatar/' + $.md5( email ) });
-		// append this new image to some div, or whatever
-		$('.group-member-gravatar').append(gravatar);
+		$.ajax({
+			type: "POST",
+			data: {
+				action: 'cgc_groups_get_userinfo',
+				user_email: email
+			},
+			dataType: "json",
+			url: cgc_group_vars.ajax_url,
+			xhrFields: {
+				withCredentials: true
+			},
+			success: function (response) {
+
+				if( response.data.img ) {
+
+					var avatar = $('<img>').attr( 'src', response.data.img );
+	
+				} else {
+
+					// create a new image with the src pointing to the user's gravatar
+					var avatar = $('<img>').attr({src: 'http://www.gravatar.com/avatar/' + $.md5( email ) });
+					// append this new image to some div, or whatever
+
+				}
+
+				$('.group-member-gravatar').append(avatar);
+
+			}
+		}).fail(function (response) {
+			if ( window.console && window.console.log ) {
+				console.log( response );
+			}
+		}).done(function (response) {
+
+		});
 
 	});
 

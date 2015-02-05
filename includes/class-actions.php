@@ -15,7 +15,7 @@ class CGC_Groups_Actions {
 		add_action( 'init', array( $this, 'remove_member_from_group' ) );
 		add_action( 'init', array( $this, 'make_member_admin' ) );
 		add_action( 'init', array( $this, 'make_admin_member' ) );
-		add_action( 'wp_ajax_cgc_search_users', array( $this, 'search_users' ) );
+		add_action( 'wp_ajax_cgc_groups_get_userinfo', array( $this, 'ajax_get_userdata' ) );
 
 	}
 
@@ -412,31 +412,29 @@ class CGC_Groups_Actions {
 	}
 
 	// retrieves a list of users via live search
-	function search_users() {
+	function ajax_get_userdata() {
 
-		if( empty( $_POST['user_name'] ) ) {
+		if( empty( $_POST['user_email'] ) ) {
 			die( '-1' );
 		}
 
-		$search_query = htmlentities2( trim( $_POST['user_name'] ) );
+		$user = get_user_by( 'email', sanitize_text_field( $_POST['user_email'] ) );
 
-		$found_users = get_users( array(
-				'number' => 9999,
-				'search' => $search_query . '*'
-			)
-		);
+		if( $user ) {
 
-		if( $found_users ) {
-			$user_list = '<ul>';
-			foreach( $found_users as $user ) {
-				$user_list .= '<li><a href="#" data-id="' . esc_attr( $user->ID ) . '" data-login="' . esc_attr( $user->user_login ) . '">' . esc_html( $user->user_login ) . '</a></li>';
-			}
-			$user_list .= '</ul>';
+			$image = get_user_meta( $user->ID, 'profile_image', true );
 
-			echo json_encode( array( 'results' => $user_list, 'id' => 'found' ) );
+			$user_data = array(
+				'name' => $user->display_name,
+				'img'  => $image ? $image : false
+			);
+
+			wp_send_json_success( array( 'success' => true, 'data' => $userdata ) );
 
 		} else {
-			echo json_encode( array( 'results' => '<p>' . __( 'No users found', 'affiliate-wp' ) . '</p>', 'id' => 'fail' ) );
+
+			wp_send_json_error( array( 'success' => false ) );
+
 		}
 
 		die();
