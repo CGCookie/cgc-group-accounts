@@ -31,7 +31,7 @@ jQuery( document ).ready( function($) {
 
 	});
 
-	$('#add-group-member-form').click(function() {
+	$('#group-add-member-submit').click(function() {
 
 		$('.group-member-gravatar img').remove();
 
@@ -53,7 +53,7 @@ jQuery( document ).ready( function($) {
 
 				console.log( response );
 
-				if( typeof response.data.img != 'undefined' ) {
+				if( typeof response.data.img !== 'undefined' ) {
 
 					var avatar = $('<img>').attr( 'src', response.data.img );
 	
