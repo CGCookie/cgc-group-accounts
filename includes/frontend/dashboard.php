@@ -43,7 +43,7 @@ $used_seats  = cgc_group_accounts()->groups->get_member_count( $group_id );
 				<a href="#" class="close-modal">Nah, nevermind</a>
 				<input type="submit" value="Add Member" />
 
-				<p><em>By adding this member to your account, you agree to the group <a href="#">terms of use</a>.</em></p>
+				<p><em>By adding this member to your account, you agree to the group <a href="https://cgcookie.com/terms-of-use/" target="_blank">terms of use</a>.</em></p>
 				<a class="close-reveal-modal">&#215;</a>
 			</div>
 
