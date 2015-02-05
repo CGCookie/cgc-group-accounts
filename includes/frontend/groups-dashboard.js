@@ -66,6 +66,7 @@ jQuery( document ).ready( function($) {
 				}
 
 				$('.group-member-gravatar').append(avatar);
+				$('.group-member-gravatar').append('<span class="member-name">' + response.data.user.name + '</span><span class="member-email">' + email + '</span>');
 
 			}
 		}).fail(function (response) {
