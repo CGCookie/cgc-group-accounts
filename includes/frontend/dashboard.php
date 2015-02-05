@@ -64,7 +64,7 @@ $used_seats  = cgc_group_accounts()->groups->get_member_count( $group_id );
 
 		</form>
 
-		<p class="group-seats">You are currently using <?php echo $used_seats; ?> out of <?php echo $total_seats; ?> available on your account. If you need more or less, email us!</p>
+		<p class="group-seats">You are currently using <?php echo $used_seats; ?> out of <?php echo $total_seats; ?> seats available on your account. If you need more or less, email us!</p>
 
 		<table class="rcp-table" id="rcp-group-dashboard-members">
 			<tbody>
