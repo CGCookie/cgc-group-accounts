@@ -164,7 +164,22 @@ class CGC_Groups_Actions {
 			$user      = get_user_by( 'email', $email );
 
 			if( ! $user ) {
-				$error = 'no-user';
+
+				// No user found, create one
+				
+				$args = array(
+					'user_login' => $email,
+					'user_email' => $email,
+					'role'       => 'subscriber',
+					'user_pass'  => wp_generate_password()
+				);
+
+				$user_id = wp_insert_user( $args );
+
+			} else {
+
+				$user_id = $user->ID;
+
 			}
 
 			$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
@@ -177,7 +192,7 @@ class CGC_Groups_Actions {
 
 			if( ! $error ) {
 
-				cgc_group_accounts()->members->add( array( 'user_id' => $user->ID, 'group_id' => $group_id ) );
+				cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
 				$message = 'group-member-added';
 
 			}
