@@ -429,7 +429,7 @@ class CGC_Groups_Actions {
 				'img'  => $image ? $image : false
 			);
 
-			wp_send_json_success( array( 'success' => true, 'data' => $user_data ) );
+			wp_send_json_success( array( 'success' => true, 'user' => $user_data ) );
 
 		} else {
 

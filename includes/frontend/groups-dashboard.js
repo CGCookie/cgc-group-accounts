@@ -53,9 +53,9 @@ jQuery( document ).ready( function($) {
 
 				console.log( response );
 
-				if( typeof response.data.img !== 'undefined' ) {
+				if( typeof response.data.user.img !== 'undefined' ) {
 
-					var avatar = $('<img>').attr( 'src', response.data.img );
+					var avatar = $('<img>').attr( 'src', response.data.user.img );
 	
 				} else {
 
