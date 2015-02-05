@@ -53,7 +53,7 @@ jQuery( document ).ready( function($) {
 
 				console.log( response );
 
-				if( response.data.img ) {
+				if( typeof response.data.img != 'undefined' ) {
 
 					var avatar = $('<img>').attr( 'src', response.data.img );
 	
