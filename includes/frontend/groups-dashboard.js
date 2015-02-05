@@ -51,6 +51,8 @@ jQuery( document ).ready( function($) {
 			},
 			success: function (response) {
 
+				console.log( response );
+
 				if( response.data.img ) {
 
 					var avatar = $('<img>').attr( 'src', response.data.img );
