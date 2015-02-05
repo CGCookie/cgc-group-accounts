@@ -1,6 +1,8 @@
 <?php
-$group_id = cgc_group_accounts()->members->get_group_id();
-$role     = cgc_group_accounts()->members->get_role();
+$group_id    = cgc_group_accounts()->members->get_group_id();
+$role        = cgc_group_accounts()->members->get_role();
+$total_seats = cgc_group_accounts()->groups->get_seats_count( $group_id );
+$used_seats  = cgc_group_accounts()->groups->get_member_count( $group_id );
 ?>
 
 <h3>Manage Group Account</h3>
@@ -61,6 +63,8 @@ $role     = cgc_group_accounts()->members->get_role();
 			</p>
 
 		</form>
+
+		<p class="group-seats">You are currently using <?php echo $used_seats; ?> out of <?php echo $total_seats; ?> available on your account. If you need more or less, email us!</p>
 
 		<table class="rcp-table" id="rcp-group-dashboard-members">
 			<tbody>
