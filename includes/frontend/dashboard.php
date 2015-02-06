@@ -116,6 +116,7 @@ $used_seats  = cgc_group_accounts()->groups->get_member_count( $group_id );
 											<input type="password" id="member-pass-confirm-<?php echo $member->user_id; ?>" name="pass2"/>
 										</p>
 										<input type="hidden" name="user_id" value="<?php echo $member->user_id; ?>"/>
+										<input type="hidden" name="cgcg-action" value="set-password"/>
 										<a href="#" class="close-modal">Nah, nevermind</a>
 										<input type="submit" value="Update Password"/>
 									</form>								
