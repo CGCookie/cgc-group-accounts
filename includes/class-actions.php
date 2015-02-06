@@ -449,7 +449,7 @@ class CGC_Groups_Actions {
 			wp_die( 'Owner and admin passwords cannot be changed' );
 		}
 
-		wp_update_user( array( 'user_id' => $_REQUEST['user_id'], 'user_pass' => sanitize_text_field( $_REQUEST['pass'] ) ) );
+		wp_update_user( array( 'ID' => $_REQUEST['user_id'], 'user_pass' => sanitize_text_field( $_REQUEST['pass'] ) ) );
 
 		if( is_admin() && current_user_can( 'manage_options' ) ) {
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'password-updated' ), $_SERVER['HTTP_REFERER'] );
