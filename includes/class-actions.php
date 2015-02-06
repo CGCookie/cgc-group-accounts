@@ -426,7 +426,7 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( empty( $_REQUEST['member'] ) ) {
+		if( empty( $_REQUEST['user_id'] ) ) {
 			wp_die( 'Something has gone wrong; no member was specified' );
 		}
 
@@ -443,12 +443,7 @@ class CGC_Groups_Actions {
 		}
 
 		$group_id  = absint( $_REQUEST['group'] );
-		$member_id = absint( $_REQUEST['member'] );
 		$role      = cgc_group_accounts()->members->get_role( $_REQUEST['user_id'] );
-
-		if( empty( $_REQUEST['user_id'] ) ) {
-			wp_die( 'No user account found for that member' );
-		}
 
 		if( strtolower( $role ) !== 'member' ) {
 			wp_die( 'Owner and admin passwords cannot be changed' );
