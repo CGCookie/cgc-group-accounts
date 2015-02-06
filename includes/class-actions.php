@@ -15,6 +15,7 @@ class CGC_Groups_Actions {
 		add_action( 'init', array( $this, 'remove_member_from_group' ) );
 		add_action( 'init', array( $this, 'make_member_admin' ) );
 		add_action( 'init', array( $this, 'make_admin_member' ) );
+		add_action( 'init', array( $this, 'set_member_password' ) );
 		add_action( 'wp_ajax_cgc_groups_get_userinfo', array( $this, 'ajax_get_userdata' ) );
 
 	}
@@ -404,6 +405,57 @@ class CGC_Groups_Actions {
 			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
 		} else {
 			$redirect = home_url( '/settings/?message=role-updated' ) . '#manage-group';
+		}
+
+		header( 'Location:' . $redirect );
+		exit;
+
+	}
+
+	public function set_member_password() {
+
+		if( empty( $_REQUEST['cgcg-action'] ) ) {
+			return;
+		}
+
+		if( 'set-password' != $_REQUEST['cgcg-action'] ) {
+			return;
+		}
+
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		if( empty( $_REQUEST['member'] ) ) {
+			wp_die( 'Something has gone wrong; no member was specified' );
+		}
+
+		if( empty( $_REQUEST['pass'] ) ) {
+			wp_die( 'Please provide a password' );
+		}
+
+		if( empty( $_REQUEST['pass2'] ) ) {
+			wp_die( 'Please confirm the password' );
+		}
+
+		if( sanitize_text_field( $_REQUEST['pass'] ) !== sanitize_text_field( $_REQUEST['pass2'] ) ) {
+			wp_die( 'Passwords do not match' );
+		}
+
+		$group_id  = absint( $_REQUEST['group'] );
+		$member_id = absint( $_REQUEST['member'] );
+		$user_id   = cgc_group_accounts()->members->get_column( 'user_id', $member_id );
+
+		if( empty( $user_id ) ) {
+			wp_die( 'No user account found for that member' );
+		}
+
+		wp_update_user( array( 'user_id' => $user_id, 'user_pass' => sanitize_text_field( $_REQUEST['pass'] ) ) );
+
+		if( is_admin() && current_user_can( 'manage_options' ) ) {
+			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'password-updated' ), $_SERVER['HTTP_REFERER'] );
+		} else {
+			$redirect = home_url( '/settings/?message=password-updated' ) . '#manage-group';
 		}
 
 		header( 'Location:' . $redirect );

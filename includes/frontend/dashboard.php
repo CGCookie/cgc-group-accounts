@@ -103,6 +103,25 @@ $used_seats  = cgc_group_accounts()->groups->get_member_count( $group_id );
 
 								<a class="close-reveal-modal">&#215;</a>
 							</div>
+							<div id="group-set-member-password-<?php echo $member->user_id; ?>" class="reveal-modal">
+								<h4>Change member password</h4>
+								<form method="POST">
+									<p>
+										<label for="member-pass-<?php echo $member->user_id; ?>">Password</label>
+										<input type="password" id="member-pass-<?php echo $member->user_id; ?>" name="pass"/>
+									</p>
+									<p>
+										<label for="member-pass-confirm-<?php echo $member->user_id; ?>">Confirm Password</label>
+										<input type="password" id="member-pass-confirm-<?php echo $member->user_id; ?>" name="pass2"/>
+									</p>
+									<input type="hidden" name="user_id" value="<?php echo $member->user_id; ?>"/>
+									<a href="#" class="close-modal">Nah, nevermind</a>
+									<input type="submit" value="Update Password"/>
+								</form>								
+
+								<a class="close-reveal-modal">&#215;</a>
+							</div>
+							<a href="#" data-reveal-id="group-set-member-password-<?php echo $member->user_id; ?>">Change Password</a>&nbsp;|&nbsp;
 							<a href="#" data-reveal-id="group-remove-member-confirmation-<?php echo $member->user_id; ?>">Remove from Group</a>&nbsp;|&nbsp;
 							<?php if( 'admin' == $member->role ) : ?>
 								<a href="<?php echo esc_url( admin_url( 'index.php?cgcg-action=make-member&group=' . $member->group_id . '&member=' . $member->user_id ) ); ?>">Set as Member</a>
