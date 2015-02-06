@@ -43,6 +43,12 @@ class CGC_Groups_Frontend_Notices {
 
 				break;
 
+			case 'password-updated' :
+
+				$message = 'Member\'s password successfully updated';
+
+				break;
+
 			case 'group-added' :
 
 				$message = 'Group added successfully';
