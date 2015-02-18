@@ -82,8 +82,6 @@ class CGC_Group_Capabilities {
 			$in_group = true;
 		}
 
-		var_dump( $in_group ); exit;
-
 		return in_array( $task, $tasks ) && $in_group;
 
 	}
