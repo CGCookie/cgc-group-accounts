@@ -53,6 +53,10 @@ class CGC_Groups_Actions {
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 
+		if( cgc_group_accounts()->groups->is_group_owner( $user_id ) ) {
+			wp_die( sprintf( 'User ID %d is already the owner of a group. Users may only be the owner of one group at a time.', $user_id ) );
+		}
+
 		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description, 'seats' => $seats ) );
 
 		if( $group_id ) {

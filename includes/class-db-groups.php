@@ -252,6 +252,23 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Determine if a user already owns a group
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  bool
+	 */
+	public function is_group_owner( $user_id = 0 ) {
+
+		if( empty( $user_id ) ) {
+			return false;
+		}
+
+		return (bool) $this->get_column_by( 'group_id', 'owner_id', $user_id );
+
+	}
+
+	/**
 	 * Create the table
 	 *
 	 * @access  public
