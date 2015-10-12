@@ -1,5 +1,6 @@
 jQuery( document ).ready( function($) {
 
+`	/*
 	//when the history state changes, gets the url from the hash and display
 	$('#group-tabs a').click(function(e) {
 
@@ -14,6 +15,7 @@ jQuery( document ).ready( function($) {
 		$(url).show();
 
 	});
+	*/
 
 	/*
      * Add member validation
