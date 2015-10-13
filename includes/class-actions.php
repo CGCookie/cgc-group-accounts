@@ -196,8 +196,17 @@ class CGC_Groups_Actions {
 			if( ! $error ) {
 
 				cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
-				$message = 'group-member-added';
-				wp_send_json_success();
+
+				$userdata = get_userdata( $user_id );
+
+				$payload = array(
+					'user_id' 		=> $user_id,
+					'name'			=> $userdata->display_name,
+					'group_id' 		=> $group_id,
+					'user_email' 	=> $email,
+					'avatar'		=> cgcUserAPI::get_profile_avatar( $user_id, 48, true )
+				);
+				wp_send_json_success( $payload );
 
 			}
 
