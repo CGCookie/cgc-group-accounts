@@ -70,7 +70,7 @@ $owner    = get_userdata( $group->owner_id );
 				</th>
 
 				<td>
-					<input type="text" name="expiration" id="expiration" class="regular-text" autocomplete="off" value="<?php echo $group->expiration; ?>" />
+					<input type="date" name="expiration" id="expiration" class="regular-text" autocomplete="off" value="<?php echo $group->expiration; ?>" />
 					<p class="description">The expiration for this group.</p>
 				</td>
 

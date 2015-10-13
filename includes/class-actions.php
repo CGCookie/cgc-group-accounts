@@ -7,18 +7,26 @@ class CGC_Groups_Actions {
 
 	public function __construct() {
 
-		add_action( 'admin_init', array( $this, 'add_group' ) );
-		add_action( 'init', array( $this, 'edit_group' ) );
-		add_action( 'init', array( $this, 'delete_group' ) );
-		add_action( 'init', array( $this, 'import_members_to_group' ) );
-		add_action( 'init', array( $this, 'add_member_to_group' ) );
-		add_action( 'init', array( $this, 'remove_member_from_group' ) );
-		add_action( 'init', array( $this, 'make_member_admin' ) );
-		add_action( 'init', array( $this, 'set_member_password' ) );
-		add_action( 'wp_ajax_cgc_groups_get_userinfo', array( $this, 'ajax_get_userdata' ) );
+		add_action( 'admin_init', 					array( $this, 'add_group' ) ); // admin
+		add_action( 'admin_init', 					array( $this, 'delete_group' ) ); // admin
+		add_action( 'admin_init', 					array( $this, 'edit_group' ) ); // admin
+		add_action( 'admin_init', 					array( $this, 'admin_remove_member_from_group' ) ); // admin
+
+		add_action( 'wp_ajax_edit-group', 			array( $this, 'edit_group_front' ) ); // front-end
+		add_action( 'init', 						array( $this, 'add_member_to_group' ) ); // front-end
+		add_action( 'wp_ajax_remove-group-member', 	array( $this, 'remove_member_from_group' ) ); // front-end
+		add_action( 'init', 						array( $this, 'make_member_admin' ) ); // front-end
+		add_action( 'init', 						array( $this, 'set_member_password' ) ); // front-end
+
+		add_action( 'init', 						array( $this, 'import_members_to_group' ) ); // not in use
 
 	}
 
+	/**
+	*	Add a group
+	*
+	*	BACK-END
+	*/
 	public function add_group() {
 
 		if( empty( $_REQUEST['cgcg-action'] ) ) {
@@ -77,6 +85,11 @@ class CGC_Groups_Actions {
 
 	}
 
+	/**
+	*	Edit a group
+	*
+	*	BACK-END
+	*/
 	public function edit_group() {
 
 		if( empty( $_REQUEST['cgcg-action'] ) ) {
@@ -103,13 +116,9 @@ class CGC_Groups_Actions {
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
-		$expiration  = !empty( $_REQUEST['expiration'] ) ? sanitize_text_field( $_REQUEST['expiration'] ) : '';
+		$expiration  = !empty( $_REQUEST['expiration'] ) ? $_REQUEST['expiration']: '';
 
 		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats, 'expiration' => $expiration );
-
-		if( ! current_user_can( 'manage_options' ) ) {
-			unset( $args['seats'] );
-		}
 
 		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
 
@@ -118,6 +127,50 @@ class CGC_Groups_Actions {
 
 	}
 
+	/**
+	*	Edit a group
+	*
+	*	FRONT-END
+	*/
+	public function edit_group_front() {
+
+		if( empty( $_POST['action'] ) ) {
+			return;
+		}
+
+		if( 'edit-group' != $_POST['action'] ) {
+			return;
+		}
+
+		if( empty( $_POST['group'] ) ) {
+			return;
+		}
+
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_POST['group'] ) ) {
+			return;
+		}
+
+		if( empty( $_POST['name'] ) ) {
+			return;
+		}
+
+		$group       = absint( $_POST['group'] );
+		$name        = sanitize_text_field( $_POST['name'] );
+		$description = ! empty( $_POST['description'] ) ? wp_kses( $_POST['description'], wp_kses_allowed_html( 'post' ) ) : '';
+
+		$args        = array( 'name' => $name, 'description' => $description );
+
+		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
+
+		wp_send_json_success();
+
+	}
+
+	/**
+	*	Delete a group
+	*
+	*	BACK-END
+	*/
 	public function delete_group() {
 
 		if( empty( $_REQUEST['cgcg-action'] ) ) {
@@ -146,6 +199,11 @@ class CGC_Groups_Actions {
 
 	}
 
+	/**
+	*	Add a member to a group
+	*
+	*	FRONT-END
+	*/
 	public function add_member_to_group() {
 
 		$error = false;
@@ -315,6 +373,11 @@ class CGC_Groups_Actions {
 
 	}
 
+	/**
+	*	Remove a member from a group
+	*
+	*	FRONT-END
+	*/
 	public function remove_member_from_group() {
 
 		if( empty( $_POST['action'] ) ) {
@@ -339,6 +402,41 @@ class CGC_Groups_Actions {
 		cgc_group_accounts()->members->remove( $member_id );
 
 		wp_send_json_success();
+
+	}
+
+	/**
+	*	Remove a member from a group
+	*
+	*	FRONT-END
+	*/
+	public function admin_remove_member_from_group() {
+
+
+		if( empty( $_REQUEST['cgcg-action'] ) ) {
+			return;
+		}
+
+		if( 'remove-member' != $_REQUEST['cgcg-action'] ) {
+			return;
+		}
+
+		if( !cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		if( empty( $_REQUEST['member'] ) ) {
+			return;
+		}
+
+
+		$group_id  = absint( $_REQUEST['group'] );
+		$member_id = absint( $_REQUEST['member'] );
+
+		cgc_group_accounts()->members->remove( $member_id );
+
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'group-deleted' ), $_SERVER['HTTP_REFERER'] ) );
+		exit;
 
 	}
 
@@ -412,35 +510,6 @@ class CGC_Groups_Actions {
 
 		wp_send_json_success();
 
-	}
-
-	// retrieves a list of users via live search
-	function ajax_get_userdata() {
-
-		if( empty( $_POST['user_email'] ) ) {
-			die( '-1' );
-		}
-
-		$user = get_user_by( 'email', sanitize_text_field( $_POST['user_email'] ) );
-
-		if( $user ) {
-
-			$image = get_user_meta( $user->ID, 'profile_image', true );
-
-			$user_data = array(
-				'name' => $user->display_name,
-				'img'  => $image ? $image : false
-			);
-
-			wp_send_json_success( array( 'success' => true, 'user' => $user_data ) );
-
-		} else {
-
-			wp_send_json_error( array( 'success' => false ) );
-
-		}
-
-		die();
 	}
 
 }
