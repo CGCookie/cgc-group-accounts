@@ -10,11 +10,10 @@ class CGC_Groups_Actions {
 		add_action( 'admin_init', array( $this, 'add_group' ) );
 		add_action( 'init', array( $this, 'edit_group' ) );
 		add_action( 'init', array( $this, 'delete_group' ) );
-		add_action( 'init', array( $this, 'add_member_to_group' ) );
 		add_action( 'init', array( $this, 'import_members_to_group' ) );
+		add_action( 'init', array( $this, 'add_member_to_group' ) );
 		add_action( 'init', array( $this, 'remove_member_from_group' ) );
 		add_action( 'init', array( $this, 'make_member_admin' ) );
-		add_action( 'init', array( $this, 'make_admin_member' ) );
 		add_action( 'init', array( $this, 'set_member_password' ) );
 		add_action( 'wp_ajax_cgc_groups_get_userinfo', array( $this, 'ajax_get_userdata' ) );
 
@@ -300,159 +299,100 @@ class CGC_Groups_Actions {
 
 	public function remove_member_from_group() {
 
-		if( empty( $_REQUEST['cgcg-action'] ) ) {
+		if( empty( $_POST['action'] ) ) {
 			return;
 		}
 
-		if( 'remove-member' != $_REQUEST['cgcg-action'] ) {
+		if( 'remove-group-member' != $_POST['action'] ) {
 			return;
 		}
 
-		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+		if( !cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_POST['group'] ) ) {
 			return;
 		}
 
-		if( empty( $_REQUEST['member'] ) ) {
+		if( empty( $_POST['member'] ) ) {
 			return;
 		}
 
-		$group_id  = absint( $_REQUEST['group'] );
-		$member_id = absint( $_REQUEST['member'] );
+		$group_id  = absint( $_POST['group'] );
+		$member_id = absint( $_POST['member'] );
 
 		cgc_group_accounts()->members->remove( $member_id );
 
-		if( is_admin() && current_user_can( 'manage_options' ) ) {
-			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'removed' ), $redirect );
-		} else {
-			$redirect = home_url( '/settings/?message=group-member-removed#manage-group' );
-		}
-
-		wp_redirect( $redirect );
-
-		exit;
+		wp_send_json_success();
 
 	}
 
 	public function make_member_admin() {
 
-		if( empty( $_REQUEST['cgcg-action'] ) ) {
+		if( empty( $_POST['action'] ) ) {
 			return;
 		}
 
-		if( 'make-admin' != $_REQUEST['cgcg-action'] ) {
+		if( 'make-admin' != $_POST['action'] ) {
 			return;
 		}
 
-		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_POST['group'] ) ) {
 			return;
 		}
 
-		if( empty( $_REQUEST['member'] ) ) {
+		if( empty( $_POST['member'] ) ) {
 			return;
 		}
 
-		$group_id  = absint( $_REQUEST['group'] );
-		$member_id = absint( $_REQUEST['member'] );
+		$group_id  = absint( $_POST['group'] );
+		$member_id = absint( $_POST['member'] );
 
 		cgc_group_accounts()->members->update( $member_id, array( 'role' => 'admin' ) );
 
 		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
-		if( is_admin() && current_user_can( 'manage_options' ) ) {
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
-		} else {
-			$redirect = home_url( '/settings/?message=role-updated' ) . '#manage-group';
-		}
-
-		header( 'Location:' . $redirect );
-		exit;
-
-	}
-
-	public function make_admin_member() {
-
-		if( empty( $_REQUEST['cgcg-action'] ) ) {
-			return;
-		}
-
-		if( 'make-member' != $_REQUEST['cgcg-action'] ) {
-			return;
-		}
-
-		if( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		if( empty( $_REQUEST['member'] ) ) {
-			return;
-		}
-
-		$group_id  = absint( $_REQUEST['group'] );
-		$member_id = absint( $_REQUEST['member'] );
-
-		cgc_group_accounts()->members->update( $member_id, array( 'role' => 'member' ) );
-
-		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
-
-		if( is_admin() && current_user_can( 'manage_options' ) ) {
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'role-updated' ), $_SERVER['HTTP_REFERER'] );
-		} else {
-			$redirect = home_url( '/settings/?message=role-updated' ) . '#manage-group';
-		}
-
-		header( 'Location:' . $redirect );
-		exit;
+		wp_send_json_success();
 
 	}
 
 	public function set_member_password() {
 
-		if( empty( $_REQUEST['cgcg-action'] ) ) {
+		if( empty( $_POST['action'] ) ) {
 			return;
 		}
 
-		if( 'set-password' != $_REQUEST['cgcg-action'] ) {
+		if( 'set-member-password' != $_POST['action'] ) {
 			return;
 		}
 
-		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_POST['group'] ) ) {
 			return;
 		}
 
-		if( empty( $_REQUEST['user_id'] ) ) {
+		if( empty( $_POST['user_id'] ) ) {
 			wp_die( 'Something has gone wrong; no member was specified' );
 		}
 
-		if( empty( $_REQUEST['pass'] ) ) {
+		if( empty( $_POST['pass'] ) ) {
 			wp_die( 'Please provide a password' );
 		}
 
-		if( empty( $_REQUEST['pass2'] ) ) {
+		if( empty( $_POST['pass2'] ) ) {
 			wp_die( 'Please confirm the password' );
 		}
 
-		if( sanitize_text_field( $_REQUEST['pass'] ) !== sanitize_text_field( $_REQUEST['pass2'] ) ) {
+		if( sanitize_text_field( $_POST['pass'] ) !== sanitize_text_field( $_POST['pass2'] ) ) {
 			wp_die( 'Passwords do not match' );
 		}
 
-		$group_id  = absint( $_REQUEST['group'] );
-		$role      = cgc_group_accounts()->members->get_role( $_REQUEST['user_id'] );
+		$group_id  = absint( $_POST['group'] );
+		$role      = cgc_group_accounts()->members->get_role( $_POST['user_id'] );
 
 		if( strtolower( $role ) !== 'member' ) {
 			wp_die( 'Owner and admin passwords cannot be changed' );
 		}
 
-		wp_update_user( array( 'ID' => $_REQUEST['user_id'], 'user_pass' => sanitize_text_field( $_REQUEST['pass'] ) ) );
+		wp_update_user( array( 'ID' => $_POST['user_id'], 'user_pass' => sanitize_text_field( $_POST['pass'] ) ) );
 
-		if( is_admin() && current_user_can( 'manage_options' ) ) {
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => 'password-updated' ), $_SERVER['HTTP_REFERER'] );
-		} else {
-			$redirect = home_url( '/settings/?message=password-updated' ) . '#manage-group';
-		}
-
-		header( 'Location:' . $redirect );
-		exit;
+		wp_send_json_success();
 
 	}
 
