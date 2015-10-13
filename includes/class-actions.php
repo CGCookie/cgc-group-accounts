@@ -171,7 +171,6 @@ class CGC_Groups_Actions {
 			if( ! $user ) {
 
 				// No user found, create one
-				
 				$args = array(
 					'user_login' => $email,
 					'user_email' => $email,
@@ -199,24 +198,15 @@ class CGC_Groups_Actions {
 
 				cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
 				$message = 'group-member-added';
+				wp_send_json_success();
 
 			}
 
 		} else {
 
 			$message = $error;
+			wp_send_json_error();
 		}
-
-
-		if( is_admin() && current_user_can( 'manage_options' ) ) {
-			$redirect = admin_url( 'admin.php?page=cgc-groups&view=view-members&group=' . $group_id );
-			$redirect = add_query_arg( array( 'cgcg-action' => false, 'message' => $message ), $redirect );
-		} else {
-			$redirect = home_url( '/settings/?message=' . $message . '#manage-group' );
-		}
-
-		wp_redirect( $redirect );
-		exit;
 
 	}
 
