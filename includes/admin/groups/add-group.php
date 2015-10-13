@@ -58,6 +58,18 @@
 
 			</tr>
 
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="expiration">Expiration</label>
+				</th>
+
+				<td>
+					<input type="date" min="1" step="1" name="expiration" id="expiration" class="regular-text" autocomplete="off" />
+					<p class="description">Set an expiration for this group</p>
+				</td>
+
+			</tr>
 		</table>
 
 		<input type="hidden" name="user_id" id="user_id" value="" />

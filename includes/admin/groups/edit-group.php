@@ -63,6 +63,18 @@ $owner    = get_userdata( $group->owner_id );
 
 			</tr>
 
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="expiration">Expiration</label>
+				</th>
+
+				<td>
+					<input type="text" name="expiration" id="expiration" class="regular-text" autocomplete="off" value="<?php echo $group->expiration; ?>" />
+					<p class="description">The expiration for this group.</p>
+				</td>
+
+			</tr>
 		</table>
 
 		<input type="hidden" name="group" id="group" value="<?php echo esc_attr( $group->group_id ); ?>" />

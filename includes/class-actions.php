@@ -51,12 +51,20 @@ class CGC_Groups_Actions {
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
+		$expiration  = !empty( $_REQUEST['expiration'] ) ? sanitize_text_field( $_REQUEST['expiration'] ) : '';
 
 		if( cgc_group_accounts()->groups->is_group_owner( $user_id ) ) {
 			wp_die( sprintf( 'User ID %d is already the owner of a group. Users may only be the owner of one group at a time.', $user_id ) );
 		}
 
-		$group_id    = cgc_group_accounts()->groups->add( array( 'owner_id' => $user_id, 'name' => $name, 'description' => $description, 'seats' => $seats ) );
+		$group_id    = cgc_group_accounts()->groups->add(
+			array(
+				'owner_id' => $user_id,
+				'name' => $name,
+				'description' => $description,
+				'seats' => $seats,
+				'expiration' => $expiration
+		) );
 
 		if( $group_id ) {
 
@@ -95,8 +103,9 @@ class CGC_Groups_Actions {
 		$name        = sanitize_text_field( $_REQUEST['name'] );
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
+		$expiration  = !empty( $_REQUEST['expiration'] ) ? sanitize_text_field( $_REQUEST['expiration'] ) : '';
 
-		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats );
+		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats, 'expiration' => $expiration );
 
 		if( ! current_user_can( 'manage_options' ) ) {
 			unset( $args['seats'] );

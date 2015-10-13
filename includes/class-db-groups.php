@@ -114,6 +114,18 @@ class CGC_Groups extends CGC_Groups_DB {
 	}
 
 	/**
+	 * Get the group expiration
+	 *
+	 * @access  public
+	 * @since   1.0
+	 * @return  int
+	 */
+	public function get_expiration( $group_id = 0 ) {
+		return $this->get_column( 'expiration', $group_id );
+	}
+
+
+	/**
 	 * Retrieve groups from the database
 	 *
 	 * @access  public
