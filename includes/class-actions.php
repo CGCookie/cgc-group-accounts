@@ -228,11 +228,16 @@ class CGC_Groups_Actions {
 			$error = 'no-group';
 		}
 
+		//@todo - bail out if email isn't an email
+
+
 		if( ! $error ) {
 
 			$group_id  = absint( $_REQUEST['group'] );
 			$email     = sanitize_text_field( $_REQUEST['user_email'] );
 			$user      = get_user_by( 'email', $email );
+
+			//@todo - accont for citizens here and bail out and have them cancel their shit first
 
 			if( ! $user ) {
 
