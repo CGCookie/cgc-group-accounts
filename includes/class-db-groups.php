@@ -32,6 +32,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'seats'         => '%d',
 			'fixed_billing' => '%d',
 			'date_created'  => '%s',
+			'expiration'	=> '%s'
 		);
 	}
 
@@ -192,6 +193,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'member_count'  => 0,
 			'fixed_billing' => 0,
 			'date_created'  => current_time( 'mysql' ),
+			'expiration'  => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -286,6 +288,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			`member_count` bigint(20) NOT NULL,
 			`fixed_billing` char(1) NOT NULL,
 			`date_created` datetime NOT NULL,
+			`expiration` datetime NOT NULL,
 			PRIMARY KEY (group_id),
 			UNIQUE KEY (owner_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
