@@ -11,6 +11,7 @@ class CGC_Groups_Actions {
 		add_action( 'admin_init', 					array( $this, 'delete_group' ) ); // admin
 		add_action( 'admin_init', 					array( $this, 'edit_group' ) ); // admin
 		add_action( 'admin_init', 					array( $this, 'admin_remove_member_from_group' ) ); // admin
+		add_action( 'admin_init', 					array( $this, 'admin_make_member_admin' ) ); // admin
 
 		add_action( 'wp_ajax_edit-group', 			array( $this, 'edit_group_front' ) ); // front-end
 		add_action( 'init', 						array( $this, 'add_member_to_group' ) ); // front-end
@@ -447,11 +448,7 @@ class CGC_Groups_Actions {
 
 	public function make_member_admin() {
 
-		if( empty( $_POST['action'] ) ) {
-			return;
-		}
-
-		if( 'make-admin' != $_POST['action'] ) {
+		if( empty( $_POST['action'] ) || empty( $_POST['member'] ) ) {
 			return;
 		}
 
@@ -459,18 +456,56 @@ class CGC_Groups_Actions {
 			return;
 		}
 
-		if( empty( $_POST['member'] ) ) {
-			return;
-		}
-
 		$group_id  = absint( $_POST['group'] );
 		$member_id = absint( $_POST['member'] );
 
-		cgc_group_accounts()->members->update( $member_id, array( 'role' => 'admin' ) );
+		if( 'make-admin' == $_POST['action'] ) {
+
+			cgc_group_accounts()->members->update( $member_id, array( 'role' => 'admin' ) );
+
+		} else if ( 'make-member' == $_POST['action'] ) {
+
+			cgc_group_accounts()->members->update( $member_id, array( 'role' => 'member' ) );
+
+		} else {
+
+			wp_send_json_error();
+		}
+
+		wp_send_json_success();
+
+	}
+
+	public function admin_make_member_admin() {
+
+		if( empty( $_REQUEST['cgcg-action'] ) || empty( $_REQUEST['member'] ) ) {
+			return;
+		}
+
+		if( ! cgc_group_accounts()->capabilities->can( 'manage_members', get_current_user_id(), $_REQUEST['group'] ) ) {
+			return;
+		}
+
+		$group_id  = absint( $_REQUEST['group'] );
+		$member_id = absint( $_REQUEST['member'] );
+
+		if( 'make-admin' == $_REQUEST['cgcg-action'] ) {
+
+			cgc_group_accounts()->members->update( $member_id, array( 'role' => 'admin' ) );
+
+		} else if ( 'make-member' == $_REQUEST['cgcg-action'] ) {
+
+			cgc_group_accounts()->members->update( $member_id, array( 'role' => 'member' ) );
+
+		} else {
+
+			return;
+		}
 
 		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
-		wp_send_json_success();
+		wp_redirect( add_query_arg( array( 'cgcg-action' => false, 'message' => 'member-updated' ), $_SERVER['HTTP_REFERER'] ) );
+		exit;
 
 	}
 
