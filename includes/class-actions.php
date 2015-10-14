@@ -252,10 +252,10 @@ class CGC_Groups_Actions {
 
 				$user_id = wp_insert_user( $args );
 
-			} else if ( $is_citizen ) {
+			//} else if ( $is_citizen ) {
 
-				$error = 'user-is-citizen';
-				wp_send_json_error( array( 'message' => 'user-is-citizen' ) );
+				//$error = 'user-is-citizen';
+				//wp_send_json_error( array( 'message' => 'user-is-citizen' ) );
 
 			} else {
 
