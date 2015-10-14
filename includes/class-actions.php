@@ -229,8 +229,8 @@ class CGC_Groups_Actions {
 			$error = 'no-group';
 		}
 
-		//@todo - bail out if email isn't an email
-
+		if  ( !is_email( $_REQUEST['user_email'] ) )
+			$error = 'not-an-email-address';
 
 		if( ! $error ) {
 
