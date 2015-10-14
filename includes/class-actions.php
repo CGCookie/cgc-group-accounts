@@ -238,9 +238,9 @@ class CGC_Groups_Actions {
 			$email     = sanitize_text_field( $_REQUEST['user_email'] );
 			$user      = get_user_by( 'email', $email );
 
-			//@todo - accont for citizens here and bail out and have them cancel their shit first
+			$is_citizen = $user && class_exists('cgcUserAPI') ? cgcUserAPI::is_user_citizen( $user->ID ) : false;
 
-			if( ! $user ) {
+			if( !$user ) {
 
 				// No user found, create one
 				$args = array(
@@ -251,6 +251,11 @@ class CGC_Groups_Actions {
 				);
 
 				$user_id = wp_insert_user( $args );
+
+			} else if ( $is_citizen ) {
+
+				$error = 'user-is-citizen';
+				wp_send_json_error( array( 'message' => 'user-is-citizen' ) );
 
 			} else {
 
