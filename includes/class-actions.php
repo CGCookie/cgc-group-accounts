@@ -13,9 +13,9 @@ class CGC_Groups_Actions {
 		add_action( 'admin_init', 					array( $this, 'admin_remove_member_from_group' ) ); // admin
 		add_action( 'admin_init', 					array( $this, 'admin_make_member_admin' ) ); // admin
 
-		add_action( 'wp_ajax_edit-group', 			array( $this, 'edit_group_front' ) ); // front-end
+		add_action( 'init', 						array( $this, 'edit_group_front' ) ); // front-end
 		add_action( 'init', 						array( $this, 'add_member_to_group' ) ); // front-end
-		add_action( 'wp_ajax_remove-group-member', 	array( $this, 'remove_member_from_group' ) ); // front-end
+		add_action( 'init', 						array( $this, 'remove_member_from_group' ) ); // front-end
 		add_action( 'init', 						array( $this, 'make_member_admin' ) ); // front-end
 		add_action( 'init', 						array( $this, 'set_member_password' ) ); // front-end
 
