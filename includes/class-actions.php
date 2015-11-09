@@ -238,7 +238,7 @@ class CGC_Groups_Actions {
 			$email     = sanitize_text_field( $_REQUEST['user_email'] );
 			$user      = get_user_by( 'email', $email );
 
-			$is_citizen = $user && class_exists('cgcUserAPI') ? cgcUserAPI::is_user_citizen( $user->ID ) : false;
+			$is_citizen = $user && class_exists('cgcUserApi') ? cgcUserApi::is_user_citizen( $user->ID ) : false;
 
 			if( !$user ) {
 
@@ -282,7 +282,7 @@ class CGC_Groups_Actions {
 					'name'			=> $userdata->display_name,
 					'group_id' 		=> $group_id,
 					'user_email' 	=> $email,
-					'avatar'		=> cgcUserAPI::get_profile_avatar( $user_id, 48, true )
+					'avatar'		=> cgcUserApi::get_profile_avatar( $user_id, 48, true )
 				);
 				wp_send_json_success( $payload );
 
