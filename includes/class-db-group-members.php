@@ -140,7 +140,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		do_action( 'cgc_add_group_member', $add );
 
-		wp_cache_delete( 'cgc_group_' . $args['group_id'] . '_members', 'groups' );
+		//wp_cache_delete( 'cgc_group_' . $args['group_id'] . '_members', 'groups' );
 
 		cgc_group_accounts()->groups->increment_count( $args['group_id'] );
 
@@ -167,7 +167,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		do_action( 'cgc_remove_group_member', $user_id );
 
-		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
+		//wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
 		cgc_group_accounts()->groups->decrement_count( $group_id );
 
@@ -190,7 +190,7 @@ class CGC_Group_Members extends CGC_Groups_DB {
 
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $this->table_name WHERE group_id = '%d'", $group_id ) );
 
-		wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
+		//wp_cache_delete( 'cgc_group_' . $group_id . '_members', 'groups' );
 
 
 	}

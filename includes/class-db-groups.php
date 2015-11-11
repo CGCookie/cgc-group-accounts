@@ -150,14 +150,14 @@ class CGC_Groups extends CGC_Groups_DB {
 
 		$where = '';
 
-		$cache_key = md5( 'cgc_groups' . serialize( $args ) );
+		//$cache_key = md5( 'cgc_groups' . serialize( $args ) );
 
-		$groups = wp_cache_get( $cache_key, 'groups' );
+		//$groups = wp_cache_get( $cache_key, 'groups' );
 
-		if( false === $groups ) {
+		//if( false === $groups ) {
 			$groups = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$this->table_name} {$where} ORDER BY {$args['orderby']} {$args['order']} LIMIT %d,%d;", absint( $args['offset'] ), absint( $args['number'] ) ) );
-			wp_cache_set( $cache_key, $groups, 'groups', 3600 );
-		}
+			//wp_cache_set( $cache_key, $groups, 'groups', 3600 );
+		//}
 
 		return $groups;
 
@@ -178,12 +178,12 @@ class CGC_Groups extends CGC_Groups_DB {
 			return array();
 		}
 
-		$members = wp_cache_get( 'cgc_group_' . $group_id . '_members', 'groups' );
+		//$members = wp_cache_get( 'cgc_group_' . $group_id . '_members', 'groups' );
 
-		if( false === $members ) {
+		//if( false === $members ) {
 			$members = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM group_members WHERE `group_id` = '%d';", $group_id ) );
-			wp_cache_set( 'cgc_group_' . $group_id . '_members', $members, 'groups', 3600 );
-		}
+			//wp_cache_set( 'cgc_group_' . $group_id . '_members', $members, 'groups', 3600 );
+		//}
 
 		return $members;
 	}
