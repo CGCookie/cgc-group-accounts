@@ -3,7 +3,7 @@
 Plugin Name: CG Cookie - Group Accounts
 Plugin URL: https://github.com/CGCookie/cgc-group-accounts
 Description: Provides the database and API for group accounts on the CG Cookie education network
-Version: 1.0
+Version: 1.1
 Author: Pippin Williamson
 Author URI: http://cgcookie.com
 */
@@ -33,7 +33,7 @@ final class CGC_Group_Accounts {
 	 *
 	 * @since 1.0
 	 */
-	private $version = '1.0';
+	private $version = '1.1';
 
 	/**
 	 * The groups DB instance variable.
