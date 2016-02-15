@@ -232,9 +232,17 @@ class CGC_Groups_Actions {
 		if  ( !is_email( $_REQUEST['user_email'] ) )
 			$error = 'not-an-email-address';
 
-		if( ! $error ) {
+		$group_id  = absint( $_REQUEST['group'] );
 
-			$group_id  = absint( $_REQUEST['group'] );
+		$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
+		$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
+		$seats_left  = $seats_count - $mem_count;
+
+		if( $seats_left < 1 ) {
+			$error = 'seats-maxed';
+		}
+
+		if( ! $error ) {
 			$email     = sanitize_text_field( $_REQUEST['user_email'] );
 			$user      = get_user_by( 'email', $email );
 
@@ -263,14 +271,6 @@ class CGC_Groups_Actions {
 
 			}
 
-			$seats_count = cgc_group_accounts()->groups->get_seats_count( $group_id );
-			$mem_count   = cgc_group_accounts()->groups->get_member_count( $group_id );
-			$seats_left  = $seats_count - $mem_count;
-
-			if( $seats_left < 1 && ! current_user_can( 'manage_options' ) ) {
-				wp_die( 'You do not have enough seats left in your group to add this members.' );
-			}
-
 			if( ! $error ) {
 
 				cgc_group_accounts()->members->add( array( 'user_id' => $user_id, 'group_id' => $group_id ) );
@@ -291,7 +291,7 @@ class CGC_Groups_Actions {
 		} else {
 
 			$message = $error;
-			wp_send_json_error();
+			wp_send_json_error(array('message' => $message));
 		}
 
 	}
