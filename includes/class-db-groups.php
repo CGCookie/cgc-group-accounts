@@ -67,7 +67,7 @@ class CGC_Groups extends CGC_Groups_DB {
 	 * @return  string
 	 */
 	public function get_access_level( $group_id = 0 ) {
-		return $this->get_column( 'access_level', $group_id );
+		return absint($this->get_column( 'access_level', $group_id ));
 	}
 
 	/**
