@@ -32,7 +32,8 @@ class CGC_Groups extends CGC_Groups_DB {
 			'seats'         => '%d',
 			'fixed_billing' => '%d',
 			'date_created'  => '%s',
-			'expiration'	=> '%s'
+			'expiration'	=> '%s',
+			'access_level'	=> '%d'
 		);
 	}
 
@@ -56,6 +57,17 @@ class CGC_Groups extends CGC_Groups_DB {
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Get the group access level
+	 *
+	 * @access  public
+	 * @since   1.3
+	 * @return  string
+	 */
+	public function get_access_level( $group_id = 0 ) {
+		return $this->get_column( 'access_level', $group_id );
 	}
 
 	/**
@@ -206,6 +218,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			'fixed_billing' => 0,
 			'date_created'  => current_time( 'mysql' ),
 			'expiration'  => '',
+			'access_level'  => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -301,6 +314,7 @@ class CGC_Groups extends CGC_Groups_DB {
 			`fixed_billing` char(1) NOT NULL,
 			`date_created` datetime NOT NULL,
 			`expiration` datetime NOT NULL,
+			`access_level` smallint NOT NULL,
 			PRIMARY KEY (group_id),
 			UNIQUE KEY (owner_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";

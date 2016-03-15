@@ -61,6 +61,7 @@ class CGC_Groups_Actions {
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 		$expiration  = !empty( $_REQUEST['expiration'] ) ? sanitize_text_field( $_REQUEST['expiration'] ) : '';
+		$access_level       = ! empty( $_REQUEST['access_level'] ) ? absint( $_REQUEST['access_level'] ) : 0;
 
 		if( cgc_group_accounts()->groups->is_group_owner( $user_id ) ) {
 			wp_die( sprintf( 'User ID %d is already the owner of a group. Users may only be the owner of one group at a time.', $user_id ) );
@@ -72,7 +73,8 @@ class CGC_Groups_Actions {
 				'name' => $name,
 				'description' => $description,
 				'seats' => $seats,
-				'expiration' => $expiration
+				'expiration' => $expiration,
+				'access_level' => $access_level
 		) );
 
 		if( $group_id ) {
@@ -118,8 +120,10 @@ class CGC_Groups_Actions {
 		$description = ! empty( $_REQUEST['description'] ) ? wp_kses( $_REQUEST['description'], wp_kses_allowed_html( 'post' ) ) : '';
 		$seats       = ! empty( $_REQUEST['seats'] ) ? absint( $_REQUEST['seats'] ) : 0;
 		$expiration  = !empty( $_REQUEST['expiration'] ) ? $_REQUEST['expiration']: '';
+		$access_level       = ! empty( $_REQUEST['access_level'] ) ? absint( $_REQUEST['access_level'] ) : 0;
 
-		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats, 'expiration' => $expiration );
+
+		$args        = array( 'name' => $name, 'description' => $description, 'seats' => $seats, 'expiration' => $expiration, 'access_level' => $access_level );
 
 		$group_id    = cgc_group_accounts()->groups->update( $group, $args );
 

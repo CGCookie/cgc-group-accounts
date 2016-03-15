@@ -75,6 +75,19 @@ $owner    = get_userdata( $group->owner_id );
 				</td>
 
 			</tr>
+
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="access_level">Access Level</label>
+				</th>
+
+				<td>
+					<input type="text" name="access_level" id="access_level" class="regular-text" autocomplete="off" value="<?php echo $group->access_level; ?>" />
+					<p class="description">Set an access level for this group</p>
+				</td>
+
+			</tr>
 		</table>
 
 		<input type="hidden" name="group" id="group" value="<?php echo esc_attr( $group->group_id ); ?>" />

@@ -70,6 +70,19 @@
 				</td>
 
 			</tr>
+
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="access_level">Access Level</label>
+				</th>
+
+				<td>
+					<input type="text" name="access_level" id="access_level" class="regular-text" autocomplete="off" />
+					<p class="description">Set an access level for this group</p>
+				</td>
+
+			</tr>
 		</table>
 
 		<input type="hidden" name="user_id" id="user_id" value="" />

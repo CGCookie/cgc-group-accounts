@@ -87,6 +87,7 @@ class CGC_Group_Capabilities {
 	}
 
 	public function rcp_is_active( $ret, $user_id ) {
+
 		if( ! $ret ) {
 
 			$group_id = cgc_group_accounts()->members->get_group_id( $user_id );
