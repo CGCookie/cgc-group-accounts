@@ -71,10 +71,8 @@ class CGC_Group_Members extends CGC_Groups_DB {
 		}
 
 		$role = $this->get_column( 'role', $user_id );
-		if( empty( $role ) ) {
-			$role = 'member';
-		}
-		return $role;
+
+		return $role ? $role : false;
 	}
 
 	/**
